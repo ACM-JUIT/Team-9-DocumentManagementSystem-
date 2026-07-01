@@ -1,15 +1,9 @@
-import { Text, View } from 'react-native';
+import { Text, View } from "react-native";
 
-export default function StorageScreen() {
+export default function Storage() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Text>Storage Page</Text>
+    <View style={{ flex:1, justifyContent:"center", alignItems:"center" }}>
+      <Text>Storage Screen</Text>
     </View>
   );
 }

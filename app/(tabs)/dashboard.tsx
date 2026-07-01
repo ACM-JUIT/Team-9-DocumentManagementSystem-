@@ -1,44 +1,20 @@
-import { useEffect, useState } from 'react';
-import {
-  RefreshControl,
-  ScrollView,
-  Text,
-  View,
-} from 'react-native';
+import { useEffect } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
-import QuickActionButton from '@/components/buttons/QuickActionButton';
-import RecentFileCard from '@/components/cards/RecentFileCard';
-import StorageCard from '@/components/cards/StorageCard';
-import SearchBar from '@/components/inputs/SearchBar';
-import Header from '@/components/layout/Header';
-import { calculateAnalytics } from '@/services/analytics';
-import {
-  deleteFile,
-  getFiles,
-  StoredFile,
-} from '@/services/storage';
+import FileCard from "@/components/home/FileCard";
+import GreetingCard from "@/components/home/GreetingCard";
+import ProviderCard from "@/components/home/ProviderCard";
+import QuickActions from "@/components/home/QuickActions";
+import StatsCard from "@/components/home/StatsCard";
+
+import { useFileStore } from "@/store/fileStore";
 
 export default function Dashboard() {
-  const [files, setFiles] = useState<StoredFile[]>([]);
-  const [refreshing, setRefreshing] = useState(false);
-  const [search, setSearch] = useState('');
-  const analytics = calculateAnalytics(files);
+  const files = useFileStore((state) => state.files);
 
-  async function loadFiles() {
-    const savedFiles = await getFiles();
-    setFiles(savedFiles);
-  }
-
-  async function handleDelete(id: string) {
-    await deleteFile(id);
-    await loadFiles();
-  }
-
-  async function onRefresh() {
-    setRefreshing(true);
-    await loadFiles();
-    setRefreshing(false);
-  }
+  const loadFiles = useFileStore(
+    (state) => state.loadFiles
+  );
 
   useEffect(() => {
     loadFiles();
@@ -46,89 +22,82 @@ export default function Dashboard() {
 
   return (
     <ScrollView
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-        />
-      }
+      style={styles.container}
+      showsVerticalScrollIndicator={false}
     >
-      <Header />
+      <GreetingCard />
 
-      <StorageCard
-  analytics={analytics}
-/>
+      <StatsCard />
 
-      <SearchBar
-        value={search}
-        onChangeText={setSearch}
-      />
+      <QuickActions />
 
-      <QuickActionButton
-        onUploadSuccess={loadFiles}
-      />
-
-      <View
-        style={{
-          marginHorizontal: 20,
-          marginTop: 30,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 22,
-            fontWeight: 'bold',
-          }}
-        >
-          Recent Files
+      <View style={styles.section}>
+        <Text style={styles.heading}>
+          Connected Storage
         </Text>
+
+        <ProviderCard
+          icon="📱"
+          title="Local Storage"
+          color="#DBEAFE"
+        />
+
+        <ProviderCard
+          icon="☁️"
+          title="Google Drive"
+          color="#FEE2E2"
+        />
+
+        <ProviderCard
+          icon="🪟"
+          title="Microsoft OneDrive"
+          color="#DCFCE7"
+        />
       </View>
 
-      {files.filter(file =>
-        file.name
-          .toLowerCase()
-          .includes(search.toLowerCase())
-      ).length === 0 ? (
-        <View
-          style={{
-            alignItems: 'center',
-            marginTop: 40,
-            marginBottom: 60,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              color: 'gray',
-            }}
-          >
-            No matching files found.
-          </Text>
+      <View style={styles.section}>
+        <Text style={styles.heading}>
+          Recent Documents
+        </Text>
 
-          <Text
-            style={{
-              color: 'gray',
-              marginTop: 10,
-            }}
-          >
-            Upload a file or try another search.
+        {files.length === 0 ? (
+          <Text style={styles.empty}>
+            No documents uploaded yet.
           </Text>
-        </View>
-      ) : (
-        files
-          .filter(file =>
-            file.name
-              .toLowerCase()
-              .includes(search.toLowerCase())
-          )
-          .map(file => (
-            <RecentFileCard
+        ) : (
+          files.map((file) => (
+            <FileCard
               key={file.id}
               file={file}
-              onDelete={handleDelete}
             />
           ))
-      )}
+        )}
+      </View>
+
+      <View style={{ height: 50 }} />
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F5F7FA",
+  },
+
+  section: {
+    marginHorizontal: 20,
+    marginTop: 25,
+  },
+
+  heading: {
+    fontSize: 22,
+    fontWeight: "700",
+    marginBottom: 15,
+  },
+
+  empty: {
+    color: "gray",
+    fontSize: 16,
+  },
+});

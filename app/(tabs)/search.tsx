@@ -1,15 +1,9 @@
-import { Text, View } from 'react-native';
+import { Text, View } from "react-native";
 
-export default function SearchScreen() {
+export default function Search() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Text>Search Page</Text>
+    <View style={{ flex:1, justifyContent:"center", alignItems:"center" }}>
+      <Text>Search Screen</Text>
     </View>
   );
 }
