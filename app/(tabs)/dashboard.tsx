@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 import FileCard from "@/components/home/FileCard";
@@ -6,6 +6,7 @@ import GreetingCard from "@/components/home/GreetingCard";
 import ProviderCard from "@/components/home/ProviderCard";
 import QuickActions from "@/components/home/QuickActions";
 import StatsCard from "@/components/home/StatsCard";
+import SearchBar from "@/components/inputs/SearchBar";
 
 import { useFileStore } from "@/store/fileStore";
 
@@ -16,9 +17,40 @@ export default function Dashboard() {
     (state) => state.loadFiles
   );
 
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
     loadFiles();
   }, []);
+
+  const filteredFiles = files.filter((file) =>
+    file.name
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
+  const totalSize = files.reduce(
+    (sum, file) => sum + file.size,
+    0
+  );
+
+  function formatSize(bytes: number) {
+    if (bytes < 1024)
+      return `${bytes} B`;
+
+    if (bytes < 1024 * 1024)
+      return `${(bytes / 1024).toFixed(1)} KB`;
+
+    if (bytes < 1024 * 1024 * 1024)
+      return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+
+    return `${(
+      bytes /
+      1024 /
+      1024 /
+      1024
+    ).toFixed(2)} GB`;
+  }
 
   return (
     <ScrollView
@@ -26,6 +58,11 @@ export default function Dashboard() {
       showsVerticalScrollIndicator={false}
     >
       <GreetingCard />
+
+      <SearchBar
+        value={search}
+        onChangeText={setSearch}
+      />
 
       <StatsCard />
 
@@ -40,18 +77,27 @@ export default function Dashboard() {
           icon="📱"
           title="Local Storage"
           color="#DBEAFE"
+          connected={true}
+          files={files.length}
+          storage={formatSize(totalSize)}
         />
 
         <ProviderCard
           icon="☁️"
           title="Google Drive"
           color="#FEE2E2"
+          connected={false}
+          files={0}
+          storage="0 MB"
         />
 
         <ProviderCard
           icon="🪟"
           title="Microsoft OneDrive"
           color="#DCFCE7"
+          connected={false}
+          files={0}
+          storage="0 MB"
         />
       </View>
 
@@ -60,12 +106,12 @@ export default function Dashboard() {
           Recent Documents
         </Text>
 
-        {files.length === 0 ? (
+        {filteredFiles.length === 0 ? (
           <Text style={styles.empty}>
-            No documents uploaded yet.
+            No matching documents found.
           </Text>
         ) : (
-          files.map((file) => (
+          filteredFiles.map((file) => (
             <FileCard
               key={file.id}
               file={file}
@@ -74,7 +120,7 @@ export default function Dashboard() {
         )}
       </View>
 
-      <View style={{ height: 50 }} />
+      <View style={{ height: 60 }} />
     </ScrollView>
   );
 }
@@ -99,5 +145,7 @@ const styles = StyleSheet.create({
   empty: {
     color: "gray",
     fontSize: 16,
+    textAlign: "center",
+    marginTop: 20,
   },
 });

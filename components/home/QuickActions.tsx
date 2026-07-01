@@ -16,13 +16,17 @@ export default function QuickActions() {
     const file = result.assets[0];
 
     await addFile({
-      id: Date.now().toString(),
-      name: file.name,
-      uri: file.uri,
-      size: file.size ?? 0,
-      mimeType: file.mimeType ?? "",
-      uploadedAt: new Date().toISOString(),
-    });
+    id: Date.now().toString(),
+    name: file.name,
+    uri: file.uri,
+    size: file.size ?? 0,
+    mimeType: file.mimeType ?? "",
+    uploadedAt: new Date().toISOString(),
+
+    storage: "Local",
+
+    favorite: false,
+});
 
     alert("Document Uploaded ✅");
   }

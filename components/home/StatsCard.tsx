@@ -1,53 +1,85 @@
 import { StyleSheet, Text, View } from "react-native";
 
+import { useFileStore } from "@/store/fileStore";
+
 export default function StatsCard() {
+  const files = useFileStore((state) => state.files);
+
+  const totalFiles = files.length;
+
+  const totalSize = files.reduce(
+    (sum, file) => sum + file.size,
+    0
+  );
+
+  function formatSize(bytes: number) {
+    if (bytes < 1024)
+      return `${bytes} B`;
+
+    if (bytes < 1024 * 1024)
+      return `${(bytes / 1024).toFixed(1)} KB`;
+
+    if (bytes < 1024 * 1024 * 1024)
+      return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+
+    return `${(
+      bytes /
+      1024 /
+      1024 /
+      1024
+    ).toFixed(2)} GB`;
+  }
+
   return (
-    <View style={styles.card}>
-      <View style={styles.box}>
-        <Text style={styles.number}>124</Text>
-        <Text style={styles.label}>Documents</Text>
+    <View style={styles.container}>
+      <View style={styles.card}>
+        <Text style={styles.number}>
+          {totalFiles}
+        </Text>
+
+        <Text style={styles.label}>
+          Files
+        </Text>
       </View>
 
-      <View style={styles.divider} />
+      <View style={styles.card}>
+        <Text style={styles.number}>
+          {formatSize(totalSize)}
+        </Text>
 
-      <View style={styles.box}>
-        <Text style={styles.number}>2.3 GB</Text>
-        <Text style={styles.label}>Storage Used</Text>
+        <Text style={styles.label}>
+          Used Storage
+        </Text>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  card:{
-    marginHorizontal:20,
-    marginTop:20,
-    backgroundColor:"#2563EB",
-    borderRadius:20,
-    flexDirection:"row",
-    justifyContent:"space-around",
-    alignItems:"center",
-    paddingVertical:25
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 20,
+    marginTop: 20,
   },
 
-  box:{
-    alignItems:"center"
+  card: {
+    width: "48%",
+    backgroundColor: "#2563EB",
+    borderRadius: 18,
+    paddingVertical: 22,
+    alignItems: "center",
   },
 
-  divider:{
-    width:1,
-    height:55,
-    backgroundColor:"#fff"
+  number: {
+    color: "#FFFFFF",
+    fontSize: 28,
+    fontWeight: "700",
   },
 
-  number:{
-    color:"#fff",
-    fontSize:28,
-    fontWeight:"700"
+  label: {
+    marginTop: 8,
+    color: "#E5E7EB",
+    fontSize: 15,
   },
-
-  label:{
-    color:"#E5E7EB",
-    marginTop:6
-  }
 });
