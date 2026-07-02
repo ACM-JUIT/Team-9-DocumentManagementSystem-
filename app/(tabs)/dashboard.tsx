@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 import FileCard from "@/components/home/FileCard";
 import GreetingCard from "@/components/home/GreetingCard";
@@ -8,7 +14,13 @@ import QuickActions from "@/components/home/QuickActions";
 import StatsCard from "@/components/home/StatsCard";
 import SearchBar from "@/components/inputs/SearchBar";
 
+import { useCloudStore } from "@/store/cloudStore";
 import { useFileStore } from "@/store/fileStore";
+
+import {
+  connectGoogleDrive,
+  getDriveFiles,
+} from "@/services/googleDrive";
 
 export default function Dashboard() {
   const files = useFileStore((state) => state.files);
@@ -18,6 +30,28 @@ export default function Dashboard() {
   );
 
   const [search, setSearch] = useState("");
+
+  // ---------- Google Drive Store ----------
+  const connected = useCloudStore(
+    (state) => state.connected
+  );
+
+  const driveFiles = useCloudStore(
+    (state) => state.driveFiles
+  );
+
+  const setConnected = useCloudStore(
+    (state) => state.setConnected
+  );
+
+  const setAccessToken = useCloudStore(
+    (state) => state.setAccessToken
+  );
+
+  const setDriveFiles = useCloudStore(
+    (state) => state.setDriveFiles
+  );
+  // ----------------------------------------
 
   useEffect(() => {
     loadFiles();
@@ -35,8 +69,7 @@ export default function Dashboard() {
   );
 
   function formatSize(bytes: number) {
-    if (bytes < 1024)
-      return `${bytes} B`;
+    if (bytes < 1024) return `${bytes} B`;
 
     if (bytes < 1024 * 1024)
       return `${(bytes / 1024).toFixed(1)} KB`;
@@ -52,12 +85,48 @@ export default function Dashboard() {
     ).toFixed(2)} GB`;
   }
 
+  async function handleGoogleLogin() {
+    try {
+      const accessToken =
+        await connectGoogleDrive();
+
+      const files =
+        await getDriveFiles(accessToken);
+
+      setConnected(true);
+
+      setAccessToken(accessToken);
+
+      setDriveFiles(files);
+
+      alert(
+        `Connected successfully!\n${files.length} files found.`
+      );
+    } catch (error) {
+      console.log(error);
+
+      alert("Google Drive Error ❌");
+    }
+  }
+
   return (
     <ScrollView
       style={styles.container}
       showsVerticalScrollIndicator={false}
     >
       <GreetingCard />
+
+      <View
+        style={{
+          marginHorizontal: 20,
+          marginTop: 10,
+        }}
+      >
+        <Button
+          title="Connect Google Drive"
+          onPress={handleGoogleLogin}
+        />
+      </View>
 
       <SearchBar
         value={search}
@@ -86,9 +155,9 @@ export default function Dashboard() {
           icon="☁️"
           title="Google Drive"
           color="#FEE2E2"
-          connected={false}
-          files={0}
-          storage="0 MB"
+          connected={connected}
+          files={driveFiles.length}
+          storage="Cloud"
         />
 
         <ProviderCard
