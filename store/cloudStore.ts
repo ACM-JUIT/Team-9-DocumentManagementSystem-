@@ -1,23 +1,25 @@
 import { create } from "zustand";
 
-interface DriveFile {
-  id: string;
-  name: string;
-  mimeType: string;
-  size?: string;
-  modifiedTime?: string;
-}
+import { AppFile } from "@/types/file";
 
 interface CloudStore {
   connected: boolean;
+
   accessToken: string | null;
-  driveFiles: DriveFile[];
 
-  setConnected: (value: boolean) => void;
+  driveFiles: AppFile[];
 
-  setAccessToken: (token: string) => void;
+  setConnected: (
+    value: boolean
+  ) => void;
 
-  setDriveFiles: (files: DriveFile[]) => void;
+  setAccessToken: (
+    token: string
+  ) => void;
+
+  setDriveFiles: (
+    files: AppFile[]
+  ) => void;
 
   logout: () => void;
 }

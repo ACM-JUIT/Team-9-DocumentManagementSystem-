@@ -1,24 +1,9 @@
+import { AppFile } from "@/types/file";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const STORAGE_KEY = "NEXUSDOCS_FILES";
 
-export interface StoredFile {
-  id: string;
-
-  name: string;
-
-  uri: string;
-
-  size: number;
-
-  mimeType: string;
-
-  uploadedAt: string;
-
-  storage: "Local" | "Google Drive" | "OneDrive";
-
-  favorite: boolean;
-}
+export type StoredFile = AppFile;
 
 export async function getFiles(): Promise<StoredFile[]> {
   const data = await AsyncStorage.getItem(STORAGE_KEY);
