@@ -10,7 +10,6 @@ import {
   View,
 } from "react-native";
 
-import { signInWithGoogle } from "@/services/auth/googleAuth";
 import { useAuthStore } from "@/store/authStore";
 
 export default function LoginScreen() {
@@ -38,23 +37,6 @@ export default function LoginScreen() {
       router.replace("/(tabs)/dashboard");
     } catch (error: any) {
       Alert.alert("Login Failed", error.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function handleGoogleLogin() {
-    try {
-      setLoading(true);
-
-      await signInWithGoogle();
-
-      router.replace("/(tabs)/dashboard");
-    } catch (error: any) {
-      Alert.alert(
-        "Google Sign-In Failed",
-        error.message
-      );
     } finally {
       setLoading(false);
     }
@@ -99,16 +81,6 @@ export default function LoginScreen() {
             Login
           </Text>
         )}
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.googleButton}
-        onPress={handleGoogleLogin}
-        disabled={loading}
-      >
-        <Text style={styles.googleButtonText}>
-          Continue with Google
-        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -161,22 +133,6 @@ const styles = StyleSheet.create({
 
   buttonText: {
     color: "#fff",
-    fontWeight: "600",
-    fontSize: 16,
-  },
-
-  googleButton: {
-    backgroundColor: "#fff",
-    borderWidth: 1,
-    borderColor: "#2563EB",
-    borderRadius: 12,
-    padding: 16,
-    alignItems: "center",
-    marginTop: 12,
-  },
-
-  googleButtonText: {
-    color: "#2563EB",
     fontWeight: "600",
     fontSize: 16,
   },
