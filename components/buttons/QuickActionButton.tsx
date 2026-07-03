@@ -1,7 +1,7 @@
-import * as DocumentPicker from 'expo-document-picker';
-import { Button } from 'react-native-paper';
+import * as DocumentPicker from "expo-document-picker";
+import { Button } from "react-native-paper";
 
-import { saveFile } from '@/services/storage';
+import { saveFile } from "@/services/storage/storage";
 
 type Props = {
   onUploadSuccess: () => void;
@@ -21,64 +21,57 @@ export default function QuickActionButton({
     const file = result.assets[0];
 
     const extension =
-  file.name.split('.').pop()?.toLowerCase() || '';
+      file.name.split(".").pop()?.toLowerCase() ?? "";
 
-const mimeType = file.mimeType ?? 'unknown';
+    const mimeType = file.mimeType ?? "unknown";
 
-function getCategory(ext: string) {
-  if (['pdf'].includes(ext)) return 'PDF';
+    function getCategory(ext: string) {
+      if (["pdf"].includes(ext)) return "PDF";
 
-  if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext))
-    return 'Image';
+      if (["jpg", "jpeg", "png", "gif", "webp"].includes(ext))
+        return "Image";
 
-  if (['mp4', 'mov', 'avi', 'mkv'].includes(ext))
-    return 'Video';
+      if (["mp4", "mov", "avi", "mkv"].includes(ext))
+        return "Video";
 
-  if (['doc', 'docx'].includes(ext))
-    return 'Document';
+      if (["doc", "docx"].includes(ext))
+        return "Document";
 
-  if (['xls', 'xlsx'].includes(ext))
-    return 'Spreadsheet';
+      if (["xls", "xlsx"].includes(ext))
+        return "Spreadsheet";
 
-  if (['ppt', 'pptx'].includes(ext))
-    return 'Presentation';
+      if (["ppt", "pptx"].includes(ext))
+        return "Presentation";
 
-  if (['mp3', 'wav'].includes(ext))
-    return 'Audio';
+      if (["mp3", "wav"].includes(ext))
+        return "Audio";
 
-  if (['zip', 'rar'].includes(ext))
-    return 'Archive';
+      if (["zip", "rar"].includes(ext))
+        return "Archive";
 
-  return 'Other';
-}
+      return "Other";
+    }
 
-await saveFile({
-  id: Date.now().toString(),
+    await saveFile({
+      id: Date.now().toString(),
+      name: file.name,
+      uri: file.uri,
+      size: file.size ?? 0,
+      mimeType,
+      extension,
+      category: getCategory(extension),
 
-  name: file.name,
+      // ✅ Fixed
+      storage: "Local",
 
-  uri: file.uri,
+      isFavorite: false,
+      uploadedAt: new Date().toISOString(),
+      modifiedAt: new Date().toISOString(),
+    });
 
-  size: file.size ?? 0,
-
-  mimeType,
-
-  extension,
-
-  category: getCategory(extension),
-
-  storageProvider: 'local',
-
-  isFavorite: false,
-
-  uploadedAt: new Date().toISOString(),
-
-  modifiedAt: new Date().toISOString(),
-});
-    // Reload Dashboard immediately
     onUploadSuccess();
 
-    alert('File Saved Successfully!');
+    alert("File Saved Successfully!");
   }
 
   return (

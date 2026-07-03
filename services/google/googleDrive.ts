@@ -1,7 +1,7 @@
 import { AppFile } from "@/types/file";
-import GoogleSignin from "./googleSignIn";
+import GoogleSignin from "../auth/googleAuth";
 
-export async function connectGoogleDrive() {
+export async function connectGoogleDrive(): Promise<string> {
   try {
     await GoogleSignin.hasPlayServices();
 
@@ -11,12 +11,12 @@ export async function connectGoogleDrive() {
 
     return tokens.accessToken;
   } catch (error) {
-    console.log(error);
+    console.log("Google Drive Connection Error:", error);
     throw error;
   }
 }
 
-export async function restoreGoogleSession() {
+export async function restoreGoogleSession(): Promise<string | null> {
   try {
     await GoogleSignin.signInSilently();
 
@@ -24,7 +24,7 @@ export async function restoreGoogleSession() {
 
     return tokens.accessToken;
   } catch (error) {
-    console.log(error);
+    console.log("Restore Session Error:", error);
     return null;
   }
 }
@@ -41,23 +41,20 @@ export async function getDriveFiles(
     }
   );
 
+  if (!response.ok) {
+    throw new Error("Failed to fetch Google Drive files.");
+  }
+
   const data = await response.json();
 
-  return data.files.map((file: any) => ({
+  return (data.files || []).map((file: any) => ({
     id: file.id,
-
     driveId: file.id,
-
     name: file.name,
-
     mimeType: file.mimeType ?? "",
-
     size: Number(file.size ?? 0),
-
     storage: "Google Drive",
-
     modifiedAt: file.modifiedTime,
-
     webViewLink: file.webViewLink,
   }));
 }

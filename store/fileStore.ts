@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
 import {
-    deleteFile,
-    getFiles,
-    saveFile,
-    StoredFile,
-} from "@/services/storage";
+  deleteFile,
+  getFiles,
+  saveFile,
+  StoredFile,
+} from "@/services/storage/storage";
 
 interface FileStore {
   files: StoredFile[];

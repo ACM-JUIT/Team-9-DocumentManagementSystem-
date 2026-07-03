@@ -21,11 +21,11 @@ import {
   connectGoogleDrive,
   getDriveFiles,
   restoreGoogleSession,
-} from "@/services/googleDrive";
+} from "@/services/google/googleDrive";
 import {
   openFile,
   shareFile,
-} from "@/services/openFile";
+} from "@/services/open/openFile";
 
 import { useCloudStore } from "@/store/cloudStore";
 import { useFileStore } from "@/store/fileStore";

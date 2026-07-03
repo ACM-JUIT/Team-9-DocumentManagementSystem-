@@ -1,17 +1,17 @@
 import { useState } from "react";
 import {
-    Alert,
-    FlatList,
-    StyleSheet,
-    Text,
-    View,
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 
 import FileActionMenu from "@/components/file/FileActionMenu";
 import UniversalFileCard from "@/components/file/UniversalFileCard";
-import {
-    openFile
-} from "@/services/openFile";
+
+import { openFile } from "@/services/open/openFile";
+
 import { useCloudStore } from "@/store/cloudStore";
 import { AppFile } from "@/types/file";
 
@@ -43,9 +43,7 @@ export default function DriveScreen() {
         renderItem={({ item }) => (
           <UniversalFileCard
             file={item}
-            onMenuPress={() =>
-              openMenu(item)
-            }
+            onMenuPress={() => openMenu(item)}
           />
         )}
         contentContainerStyle={{
@@ -54,55 +52,53 @@ export default function DriveScreen() {
       />
 
       <FileActionMenu
-  visible={menuVisible}
-  file={selectedFile}
-  onClose={() =>
-    setMenuVisible(false)
-  }
-  onOpen={() => {
-    if (selectedFile) {
-      openFile(selectedFile);
-    }
+        visible={menuVisible}
+        file={selectedFile}
+        onClose={() => setMenuVisible(false)}
+        onOpen={() => {
+          if (selectedFile) {
+            openFile(selectedFile);
+          }
 
-    setMenuVisible(false);
-  }}
-  onShare={() => {
-    Alert.alert(
-      "Coming Soon",
-      "Sharing Google Drive files will be added soon."
-    );
+          setMenuVisible(false);
+        }}
+        onShare={() => {
+          Alert.alert(
+            "Coming Soon",
+            "Sharing Google Drive files will be added soon."
+          );
 
-    setMenuVisible(false);
-  }}
-  onDownload={() => {
-    Alert.alert(
-      "Coming Soon",
-      "Download feature will be added next."
-    );
+          setMenuVisible(false);
+        }}
+        onDownload={() => {
+          Alert.alert(
+            "Coming Soon",
+            "Download feature will be added next."
+          );
 
-    setMenuVisible(false);
-  }}
-  onFavorite={() => {
-    Alert.alert(
-      "Coming Soon",
-      "Favorites feature will be added next."
-    );
+          setMenuVisible(false);
+        }}
+        onFavorite={() => {
+          Alert.alert(
+            "Coming Soon",
+            "Favorites feature will be added next."
+          );
 
-    setMenuVisible(false);
-  }}
-  onDetails={() => {
-    Alert.alert(
-      "File Details",
-      `Name: ${selectedFile?.name}
+          setMenuVisible(false);
+        }}
+        onDetails={() => {
+          Alert.alert(
+            "File Details",
+            `Name: ${selectedFile?.name}
 
 Size: ${selectedFile?.size ?? 0} Bytes
 
 Type: ${selectedFile?.mimeType}`
-    );
+          );
 
-    setMenuVisible(false);
-  }}
-/>
+          setMenuVisible(false);
+        }}
+      />
     </View>
   );
 }

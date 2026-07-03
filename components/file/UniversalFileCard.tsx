@@ -1,16 +1,16 @@
 import {
-    Entypo,
-    FontAwesome5,
-    MaterialIcons,
+  Entypo,
+  FontAwesome5,
+  MaterialIcons,
 } from "@expo/vector-icons";
 import {
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
-import { openFile } from "@/services/openFile";
+import { openFile } from "@/services/open/openFile";
 import { AppFile } from "@/types/file";
 
 type Props = {

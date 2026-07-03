@@ -1,6 +1,6 @@
 import { Button, View } from "react-native";
 
-import { connectGoogleDrive } from "@/services/googleDrive";
+import { connectGoogleDrive } from "@/services/google/googleDrive";
 
 export default function Test() {
   return (

@@ -18,9 +18,15 @@ export interface AppFile {
 
   driveId?: string;
 
+  extension?: string;
+
+  category?: string;
+
+  uploadedAt?: string;
+
   modifiedAt?: string;
 
-  favorite?: boolean;
+  isFavorite?: boolean;
 
   webViewLink?: string;
 }

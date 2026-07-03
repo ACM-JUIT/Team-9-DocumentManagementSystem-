@@ -67,7 +67,7 @@ export async function toggleFavorite(
     file.id === id
       ? {
           ...file,
-          favorite: !file.favorite,
+          isFavorite: !file.isFavorite,
         }
       : file
   );
