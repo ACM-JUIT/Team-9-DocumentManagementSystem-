@@ -1,15 +1,16 @@
 import { router } from "expo-router";
 import { useState } from "react";
 import {
-    ActivityIndicator,
-    Alert,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
+import { signInWithGoogle } from "@/services/auth/googleAuth";
 import { useAuthStore } from "@/store/authStore";
 
 export default function LoginScreen() {
@@ -22,7 +23,10 @@ export default function LoginScreen() {
 
   async function handleLogin() {
     if (!email || !password) {
-      Alert.alert("Missing Information", "Please enter email and password.");
+      Alert.alert(
+        "Missing Information",
+        "Please enter email and password."
+      );
       return;
     }
 
@@ -39,9 +43,28 @@ export default function LoginScreen() {
     }
   }
 
+  async function handleGoogleLogin() {
+    try {
+      setLoading(true);
+
+      await signInWithGoogle();
+
+      router.replace("/(tabs)/dashboard");
+    } catch (error: any) {
+      Alert.alert(
+        "Google Sign-In Failed",
+        error.message
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome Back 👋</Text>
+      <Text style={styles.title}>
+        Welcome Back 👋
+      </Text>
 
       <Text style={styles.subtitle}>
         Login to continue using NexusDocs
@@ -72,8 +95,20 @@ export default function LoginScreen() {
         {loading ? (
           <ActivityIndicator color="#fff" />
         ) : (
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>
+            Login
+          </Text>
         )}
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.googleButton}
+        onPress={handleGoogleLogin}
+        disabled={loading}
+      >
+        <Text style={styles.googleButtonText}>
+          Continue with Google
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -113,7 +148,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
-    backgroundColor: "white",
+    backgroundColor: "#fff",
   },
 
   button: {
@@ -125,7 +160,23 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    color: "white",
+    color: "#fff",
+    fontWeight: "600",
+    fontSize: 16,
+  },
+
+  googleButton: {
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#2563EB",
+    borderRadius: 12,
+    padding: 16,
+    alignItems: "center",
+    marginTop: 12,
+  },
+
+  googleButtonText: {
+    color: "#2563EB",
     fontWeight: "600",
     fontSize: 16,
   },

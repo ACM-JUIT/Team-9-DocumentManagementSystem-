@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "277971490418",
+    "project_id": "nexusdocs-84605",
+    "storage_bucket": "nexusdocs-84605.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277971490418:android:2eca407428d45ab094d4eb",
+        "android_client_info": {
+          "package_name": "com.amityadav.nexusdocs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "277971490418-4i3an581ks2uu9lck1q5s8fuaolotrsf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzOBdnQypHFMOivcvqZzY2oXwn_lNlmL4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "277971490418-4i3an581ks2uu9lck1q5s8fuaolotrsf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
