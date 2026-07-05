@@ -13,7 +13,7 @@ export default function ProfileCard() {
                  <Text style={styles.name}>
                  User Name
                  </Text>
-                 <Text style={styles.name}>
+                 <Text style={styles.role}>
                     Student
                  </Text>
                  </View>
