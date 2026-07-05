@@ -1,3 +1,4 @@
+import CategoryCard from "@/components/search/CategoryCard";
 import RecentSearchCard from "@/components/search/RecentSearchCard";
 import SearchBar from "@/components/search/SearchBar";
 import {
@@ -36,6 +37,27 @@ export default function Search() {
         title="Vacation.jpg"
         type="Image"
       />
+      <Text style={styles.section}>
+        Categories
+      </Text>
+      <View style={styles.grid}>
+        <CategoryCard
+          icon="picture-as-pdf"
+          title="PDF"
+        />
+        <CategoryCard
+          icon="image"
+          title="Images"
+        />
+        <CategoryCard
+          icon="description"
+          title="Documents"
+        />
+        <CategoryCard
+          icon="movie"
+          title="Videos"
+            />
+      </View>
     </ScrollView>
   );
 }
@@ -63,5 +85,13 @@ const styles = StyleSheet.create({
     marginTop: 30,
     fontSize: 20,
     fontWeight: "700",
+  },
+   grid: {
+    marginHorizontal: 20,
+    marginTop: 18,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    marginBottom: 30,
   },
 });

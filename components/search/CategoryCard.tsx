@@ -1,80 +1,73 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 type Props = {
+  icon: string;
   title: string;
-  type: string;
 };
-export default function RecentSearchCard({
+export default function CategoryCard({
+  icon,
   title,
-  type,
 }: Props) {
-  let emoji = "📄";
-  let color = "#DBEAFE";
-  if (type === "Image") {
-    emoji = "🖼️";
-    color = "#DCFCE7";
-  }
- if (type === "Word Document") {
-    emoji = "📃";
-    color = "#E9D5FF";
-  }
-  return (
+  const emojis: Record<string, string> = {
+    "picture-as-pdf": "📄",
+    image: "🖼️",
+    description: "📃",
+    movie: "🎬",
+  };
+  const colors: Record<string, string> = {
+    "picture-as-pdf": "#FEE2E2",
+    image: "#DBEAFE",
+    description: "#E9D5FF",
+    movie: "#FEF3C7",
+  };
+ return (
      <TouchableOpacity style={styles.card}>
       <View
         style={[
           styles.iconContainer,
           {
-            backgroundColor: color,
+            backgroundColor:
+              colors[icon] || "#DBEAFE",
           },
         ]}
       >
         <Text style={styles.emoji}>
-          {emoji}
+          {emojis[icon]}
         </Text>
       </View>
-    <View style={{ flex: 1 }}>
+
       <Text style={styles.title}>
         {title}
       </Text>
-      <Text style={styles.subtitle}>
-        {type}
-      </Text>
-    </View>
-  </TouchableOpacity>
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "#FFFFFF",
-    marginHorizontal: 20,
-    marginTop: 16,
-    padding: 18,
-    borderRadius: 22,
-    flexDirection: "row",
+    width: "48%",
+    borderRadius: 24,
+    paddingVertical: 28,
     alignItems: "center",
+    marginBottom: 18,
     shadowColor: "#000",
     shadowOpacity: 0.08,
     shadowRadius: 8,
     elevation: 4,
   },
   iconContainer: {
-    width: 60,
-    height: 60,
-    borderRadius: 18,
+    width: 74,
+    height: 74,
+    borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 16,
+    marginBottom: 18,
   },
   emoji: {
-    fontSize: 28,
+    fontSize: 34,
   },
   title: {
     fontSize: 17,
     fontWeight: "600",
-  },
-  subtitle: {
-    marginTop: 3,
-    fontSize: 15,
-    color: "#6B7280",
   },
 });
