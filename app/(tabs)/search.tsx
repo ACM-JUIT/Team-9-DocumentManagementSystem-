@@ -1,3 +1,4 @@
+import RecentSearchCard from "@/components/search/RecentSearchCard";
 import SearchBar from "@/components/search/SearchBar";
 import {
   ScrollView,
@@ -20,6 +21,21 @@ export default function Search() {
         </Text>
       </View>
       <SearchBar />
+      <Text style={styles.section}>
+        Recent Searches
+      </Text>
+      <RecentSearchCard
+        title="Resume.pdf"
+        type="PDF Document"
+      />
+      <RecentSearchCard
+        title="Notes.docx"
+        type="Word Document"
+      />
+      <RecentSearchCard
+        title="Vacation.jpg"
+        type="Image"
+      />
     </ScrollView>
   );
 }
@@ -41,5 +57,11 @@ const styles = StyleSheet.create({
     marginTop: 8,
     fontSize: 16,
     color: "#6B7280",
+  },
+  section: {
+    marginHorizontal: 20,
+    marginTop: 30,
+    fontSize: 20,
+    fontWeight: "700",
   },
 });
