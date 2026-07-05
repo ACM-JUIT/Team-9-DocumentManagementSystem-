@@ -1,20 +1,16 @@
-import { MaterialIcons } from "@expo/vector-icons";
 import { StyleSheet, Text, View } from "react-native";
 export default function ProfileCard() {
     return (
         <View style={styles.card}>
             <View style={styles.avatar}>
-                <MaterialIcons
-                 name="person" 
-                 size={60} 
-                 color="#2563EB" 
-                 />
+                <Text style={styles.avatarEmoji}>👩
+                 </Text>
                  </View>
                  <Text style={styles.name}>
-                 User Name
+                 Welcome!
                  </Text>
                  <Text style={styles.role}>
-                    Student
+                 Manage your documents
                  </Text>
                  </View>
     );
@@ -35,6 +31,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#DBEAFE",
         justifyContent: "center",
         alignItems: "center",
+    },
+    avatarEmoji: {
+        fontSize: 52,
     },
     name: {
         fontSize: 24,
