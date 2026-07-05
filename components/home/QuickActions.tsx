@@ -59,24 +59,42 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginHorizontal: 20,
-    marginTop: 25,
+    marginTop: 28,
+    marginBottom: 10,
   },
 
   card: {
     width: "31%",
-    backgroundColor: "#fff",
-    borderRadius: 18,
+    backgroundColor: "#1F2937", // Dark card
+    borderRadius: 20,
     alignItems: "center",
-    paddingVertical: 20,
-    elevation: 4,
+    justifyContent: "center",
+    paddingVertical: 22,
+
+    borderWidth: 1,
+    borderColor: "#334155",
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 10,
+
+    elevation: 8,
   },
 
   icon: {
-    fontSize: 28,
+    fontSize: 32,
+    marginBottom: 12,
   },
 
   text: {
-    marginTop: 10,
+    marginTop: 2,
+    fontSize: 15,
     fontWeight: "700",
+    color: "#F8FAFC",
+    letterSpacing: 0.3,
   },
 });

@@ -169,15 +169,27 @@ export default function UniversalFileCard({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#1F2937",
     marginHorizontal: 20,
-    marginBottom: 14,
-    borderRadius: 18,
+    marginBottom: 16,
+    borderRadius: 20,
     padding: 18,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    elevation: 4,
+
+    borderWidth: 1,
+    borderColor: "#374151",
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.28,
+    shadowRadius: 10,
+
+    elevation: 7,
   },
 
   left: {
@@ -187,39 +199,47 @@ const styles = StyleSheet.create({
   },
 
   iconContainer: {
-    width: 58,
-    height: 58,
-    borderRadius: 16,
-    backgroundColor: "#EEF4FF",
+    width: 60,
+    height: 60,
+    borderRadius: 18,
+    backgroundColor: "#2563EB",
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 15,
+    marginRight: 16,
+
+    borderWidth: 1,
+    borderColor: "#3B82F6",
   },
 
   title: {
     fontSize: 17,
     fontWeight: "700",
-    color: "#111827",
+    color: "#F8FAFC",
   },
 
   subtitle: {
-    marginTop: 4,
-    color: "#6B7280",
+    marginTop: 5,
+    color: "#94A3B8",
     fontSize: 14,
+    fontWeight: "500",
   },
 
   badge: {
     marginTop: 10,
-    backgroundColor: "#DBEAFE",
+    backgroundColor: "#1D4ED8",
     alignSelf: "flex-start",
     paddingHorizontal: 12,
-    paddingVertical: 5,
-    borderRadius: 20,
+    paddingVertical: 6,
+    borderRadius: 18,
+
+    borderWidth: 1,
+    borderColor: "#3B82F6",
   },
 
   badgeText: {
-    color: "#2563EB",
+    color: "#FFFFFF",
     fontWeight: "700",
     fontSize: 12,
+    letterSpacing: 0.3,
   },
 });

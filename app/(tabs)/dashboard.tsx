@@ -296,24 +296,28 @@ Storage: ${selectedFile?.storage}`
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F7FA",
+    backgroundColor: "#0F172A",
   },
 
   section: {
     marginHorizontal: 20,
-    marginTop: 25,
+    marginTop: 30,
+    paddingVertical: 6,
   },
 
   heading: {
-    fontSize: 22,
-    fontWeight: "700",
-    marginBottom: 15,
+    fontSize: 24,
+    color: "#F8FAFC",
+    fontFamily: "Inter_700Bold",
+    marginBottom: 18,
+    letterSpacing: 0.4,
   },
 
   empty: {
-    color: "gray",
-    fontSize: 16,
+    color: "#94A3B8",
+    fontSize: 15,
     textAlign: "center",
-    marginTop: 20,
+    marginTop: 28,
+    fontFamily: "Inter_500Medium",
   },
 });

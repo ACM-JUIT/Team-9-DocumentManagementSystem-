@@ -99,48 +99,90 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     padding: 24,
-    backgroundColor: "#F5F7FA",
+    backgroundColor: "#111827",
   },
 
   title: {
-    fontSize: 32,
-    fontWeight: "700",
+    fontSize: 34,
+    fontFamily: "Inter_700Bold",
+    color: "#F8FAFC",
     marginBottom: 10,
+    letterSpacing: 0.3,
   },
 
   subtitle: {
-    color: "#666",
-    marginBottom: 40,
+    color: "#94A3B8",
+    marginBottom: 36,
     fontSize: 16,
+    fontFamily: "Inter_400Regular",
+    lineHeight: 24,
   },
 
   input: {
+    backgroundColor: "#1F2937",
+    color: "#F8FAFC",
+
     borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 16,
-    backgroundColor: "#fff",
+    borderColor: "#374151",
+
+    borderRadius: 18,
+
+    paddingVertical: 16,
+    paddingHorizontal: 18,
+
+    marginBottom: 18,
+
+    fontSize: 16,
+    fontFamily: "Inter_500Medium",
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 8,
+
+    elevation: 5,
   },
 
   button: {
-    backgroundColor: "#2563EB",
-    borderRadius: 12,
-    padding: 16,
+    backgroundColor: "#1D4ED8",
+
+    borderRadius: 18,
+
+    paddingVertical: 17,
+
     alignItems: "center",
-    marginTop: 8,
+
+    marginTop: 12,
+
+    borderWidth: 1,
+    borderColor: "#3B82F6",
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+
+    elevation: 8,
   },
 
   buttonText: {
-    color: "#fff",
-    fontWeight: "600",
+    color: "#FFFFFF",
     fontSize: 16,
+    fontFamily: "Inter_600SemiBold",
+    letterSpacing: 0.3,
   },
 
   register: {
     marginTop: 24,
     textAlign: "center",
-    color: "#2563EB",
-    fontWeight: "600",
+    color: "#60A5FA",
+    fontSize: 15,
+    fontFamily: "Inter_500Medium",
   },
 });

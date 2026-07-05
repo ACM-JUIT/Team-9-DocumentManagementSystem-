@@ -60,26 +60,43 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginHorizontal: 20,
-    marginTop: 20,
+    marginTop: 22,
+    marginBottom: 6,
   },
 
   card: {
     width: "48%",
-    backgroundColor: "#2563EB",
-    borderRadius: 18,
-    paddingVertical: 22,
+    backgroundColor: "#1D4ED8", // Royal Blue
+    borderRadius: 20,
+    paddingVertical: 24,
     alignItems: "center",
+
+    borderWidth: 1,
+    borderColor: "#3B82F6",
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+
+    elevation: 8,
   },
 
   number: {
     color: "#FFFFFF",
-    fontSize: 28,
-    fontWeight: "700",
+    fontSize: 30,
+    fontWeight: "800",
+    letterSpacing: 0.3,
   },
 
   label: {
     marginTop: 8,
-    color: "#E5E7EB",
-    fontSize: 15,
+    color: "#DBEAFE",
+    fontSize: 14,
+    fontWeight: "600",
+    letterSpacing: 0.2,
   },
 });

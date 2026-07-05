@@ -73,35 +73,54 @@ export default function ProviderCard({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#FFFFFF",
-    padding: 18,
-    borderRadius: 18,
-    marginBottom: 15,
+    backgroundColor: "#1F2937",
+    paddingVertical: 18,
+    paddingHorizontal: 18,
+    borderRadius: 20,
+    marginBottom: 16,
     flexDirection: "row",
     alignItems: "center",
-    elevation: 3,
+
+    borderWidth: 1,
+    borderColor: "#374151",
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
+
+    elevation: 6,
   },
 
   iconBox: {
-    width: 55,
-    height: 55,
-    borderRadius: 15,
+    width: 60,
+    height: 60,
+    borderRadius: 18,
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 15,
+    marginRight: 16,
+
+    borderWidth: 1,
+    borderColor: "#334155",
   },
 
   icon: {
-    fontSize: 26,
+    fontSize: 28,
   },
 
   title: {
     fontSize: 18,
     fontWeight: "700",
+    color: "#F8FAFC",
   },
 
   subtitle: {
-    marginTop: 5,
-    color: "#6B7280",
+    marginTop: 6,
+    fontSize: 14,
+    color: "#94A3B8",
+    fontWeight: "500",
   },
 });

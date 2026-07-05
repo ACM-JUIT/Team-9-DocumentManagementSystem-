@@ -4,11 +4,11 @@ export default function GreetingCard() {
   return (
     <View style={styles.container}>
       <Text style={styles.small}>
-        Welcome Back 👋
+        Hello there 👋
       </Text>
 
       <Text style={styles.name}>
-        Amit Yadav
+        Everything synced. Everything secure.
       </Text>
 
       <Text style={styles.sub}>
@@ -19,27 +19,33 @@ export default function GreetingCard() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 20,
+    marginTop: 55,
+    marginBottom: 18,
+  },
 
-container:{
-marginHorizontal:20,
-marginTop:55
-},
+  small: {
+    fontSize: 15,
+    color: "#94A3B8",
+    fontFamily: "Inter_500Medium",
+    letterSpacing: 0.5,
+  },
 
-small:{
-fontSize:16,
-color:"#6B7280"
-},
+  name: {
+  fontSize: 32,
+  fontFamily: "Inter_700Bold",
+    color: "#F8FAFC",
+    marginTop: 6,
+    letterSpacing: 0.3,
+  },
 
-name:{
-fontSize:30,
-fontWeight:"700",
-marginTop:5
-},
-
-sub:{
-marginTop:8,
-fontSize:16,
-color:"#6B7280"
-}
-
+  sub: {
+  marginTop: 10,
+  fontSize: 15,
+  color: "#CBD5E1",
+  fontFamily: "Inter_400Regular",
+    lineHeight: 22,
+    fontWeight: "400",
+  },
 });
