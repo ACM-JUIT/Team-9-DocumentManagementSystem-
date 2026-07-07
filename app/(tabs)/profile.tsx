@@ -27,32 +27,37 @@ export default function Profile() {
       Account
     </Text>
     <ProfileOption
-    icon="person"
+    emoji="👤"
     title="Edit Profile"
-    subtitle="Change your personal details"
+    subtitle="Update your profile"
+    color="#DBEAFE"
     />
     <ProfileOption
-    icon="folder"
+    emoji="📂"
     title="My Documents"
-    subtitle="View uploaded files"
+    subtitle="View all your files"
+    color="#DCFCE7"
     />
     <ProfileOption
-        icon="favorite"
-        title="Favorites"
-        subtitle="Your starred documents"
+    emoji="⭐"
+    title="Favorites"
+    subtitle="Access starred files"
+    color="#FEF3C7"
       />
     <Text style={styles.section}>
       Preferences
     </Text>
      <ProfileOption
-        icon="settings"
-        title="Settings"
-        subtitle="App preferences"
+     emoji="⚙️"
+     title="Settings"
+     subtitle="Manage app preferences"
+     color="#E9D5FF"
       />
       <ProfileOption
-      icon="logout"
+      emoji="🚪"
       title="Logout"
       subtitle="Sign out of your account"
+      color="#FEE2E2"
       />
    <View style={{ height: 40 }} />
     </ScrollView>
