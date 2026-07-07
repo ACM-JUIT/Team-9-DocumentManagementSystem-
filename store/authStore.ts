@@ -2,10 +2,11 @@ import { User } from "firebase/auth";
 import { create } from "zustand";
 
 import {
-    login,
-    logout,
-    register,
-    subscribeToAuth,
+  login,
+  loginWithGoogle,
+  logout,
+  register,
+  subscribeToAuth,
 } from "@/services/auth/authService";
 
 interface AuthStore {
@@ -19,6 +20,8 @@ interface AuthStore {
     email: string,
     password: string
   ) => Promise<void>;
+
+  loginWithGoogle: () => Promise<void>;
 
   register: (
     email: string,
@@ -46,21 +49,21 @@ export const useAuthStore = create<AuthStore>((set) => ({
 
   login: async (email, password) => {
     const user = await login(email, password);
+    set({ user });
+  },
 
+  loginWithGoogle: async () => {
+    const user = await loginWithGoogle();
     set({ user });
   },
 
   register: async (email, password) => {
     const user = await register(email, password);
-
     set({ user });
   },
 
   logout: async () => {
     await logout();
-
-    set({
-      user: null,
-    });
+    set({ user: null });
   },
 }));

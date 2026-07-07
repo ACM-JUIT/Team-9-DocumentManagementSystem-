@@ -1,20 +1,17 @@
 import {
-    GoogleSignin,
+  GoogleSignin,
 } from "@react-native-google-signin/google-signin";
 
 GoogleSignin.configure({
-  webClientId:
-    process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID,
-
-  scopes: [
-    "profile",
-    "email",
-    "https://www.googleapis.com/auth/drive.readonly",
-  ],
+  webClientId: process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID!,
 
   offlineAccess: false,
 
-  forceCodeForRefreshToken: false,
+  scopes: [
+    "email",
+    "profile",
+    "https://www.googleapis.com/auth/drive.readonly",
+  ],
 });
 
 export default GoogleSignin;

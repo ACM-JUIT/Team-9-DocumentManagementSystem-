@@ -15,6 +15,10 @@ import { useAuthStore } from "@/store/authStore";
 export default function LoginScreen() {
   const login = useAuthStore((state) => state.login);
 
+  const loginWithGoogle = useAuthStore(
+    (state) => state.loginWithGoogle
+  );
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -37,6 +41,23 @@ export default function LoginScreen() {
       router.replace("/(tabs)/dashboard");
     } catch (error: any) {
       Alert.alert("Login Failed", error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleGoogleLogin() {
+    try {
+      setLoading(true);
+
+      await loginWithGoogle();
+
+      router.replace("/(tabs)/dashboard");
+    } catch (error: any) {
+      Alert.alert(
+        "Google Sign-In Failed",
+        error.message
+      );
     } finally {
       setLoading(false);
     }
@@ -84,10 +105,20 @@ export default function LoginScreen() {
       </TouchableOpacity>
 
       <TouchableOpacity
+        style={styles.googleButton}
+        onPress={handleGoogleLogin}
+        disabled={loading}
+      >
+        <Text style={styles.googleButtonText}>
+          Continue with Google
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
         onPress={() => router.push("/register")}
       >
         <Text style={styles.register}>
-          Don't have an account? Register
+          Don&apos;t have an account? Register
         </Text>
       </TouchableOpacity>
     </View>
@@ -176,6 +207,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Inter_600SemiBold",
     letterSpacing: 0.3,
+  },
+
+  googleButton: {
+    backgroundColor: "#FFFFFF",
+
+    borderRadius: 18,
+
+    paddingVertical: 17,
+
+    alignItems: "center",
+
+    marginTop: 16,
+
+    borderWidth: 1,
+    borderColor: "#D1D5DB",
+  },
+
+  googleButtonText: {
+    color: "#111827",
+    fontSize: 16,
+    fontFamily: "Inter_600SemiBold",
   },
 
   register: {

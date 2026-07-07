@@ -1,12 +1,15 @@
 import {
-    createUserWithEmailAndPassword,
-    onAuthStateChanged,
-    signInWithEmailAndPassword,
-    signOut,
-    User,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithCredential,
+  signInWithEmailAndPassword,
+  signOut,
+  User,
 } from "firebase/auth";
 
 import { auth } from "./firebase";
+import GoogleSignin from "./googleAuth";
 
 /**
  * Register a new user
@@ -41,10 +44,39 @@ export async function login(
 }
 
 /**
+ * Login with Google
+ */
+export async function loginWithGoogle(): Promise<User> {
+  // Make sure Google Play Services are available
+  await GoogleSignin.hasPlayServices();
+
+  // Open Google account picker
+  const response = await GoogleSignin.signIn();
+
+  /**
+   * Firebase needs the ID Token.
+   */
+  const idToken = response.data?.idToken;
+
+  if (!idToken) {
+    throw new Error("Google ID Token not found.");
+  }
+
+  // Create Firebase credential
+  const credential = GoogleAuthProvider.credential(idToken);
+
+  // Sign into Firebase
+  const result = await signInWithCredential(auth, credential);
+
+  return result.user;
+}
+
+/**
  * Logout current user
  */
 export async function logout() {
   await signOut(auth);
+  await GoogleSignin.signOut();
 }
 
 /**

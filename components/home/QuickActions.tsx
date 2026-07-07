@@ -25,7 +25,7 @@ export default function QuickActions() {
 
     storage: "Local",
 
-    favorite: false,
+    isFavorite: false,
 });
 
     alert("Document Uploaded ✅");
