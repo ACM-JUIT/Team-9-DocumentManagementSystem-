@@ -10,16 +10,21 @@ export default function RecentSearchCard({
   type,
 }: Props) {
   let emoji = "📄";
-  let color = "#DBEAFE";
+  let color = "#2B3A4F";
 
   if (type === "Image") {
     emoji = "🖼️";
-    color = "#DCFCE7";
+    color = "#2B3A4F";
   }
 
   if (type === "Word Document") {
     emoji = "📃";
-    color = "#E9D5FF";
+    color = "#403456";
+  }
+
+  if (type === "PDF Document") {
+    emoji = "📄";
+    color = "#3F2D34";
   }
 
   return (
