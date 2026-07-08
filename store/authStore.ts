@@ -49,21 +49,34 @@ export const useAuthStore = create<AuthStore>((set) => ({
 
   login: async (email, password) => {
     const user = await login(email, password);
-    set({ user });
+
+    set({
+      user,
+    });
   },
 
   loginWithGoogle: async () => {
     const user = await loginWithGoogle();
-    set({ user });
+
+    set({
+      user,
+    });
   },
 
   register: async (email, password) => {
     const user = await register(email, password);
-    set({ user });
+
+    set({
+      user,
+    });
   },
 
   logout: async () => {
     await logout();
-    set({ user: null });
+
+    set({
+      user: null,
+      loading: false,
+    });
   },
 }));

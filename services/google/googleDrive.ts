@@ -1,26 +1,37 @@
 import { AppFile } from "@/types/file";
 import GoogleSignin from "../auth/googleAuth";
 
+/**
+ * Connect Google Drive
+ */
 export async function connectGoogleDrive(): Promise<string> {
   try {
     console.log("========== GOOGLE DRIVE ==========");
-    console.log("STEP 1: Checking Google Play Services...");
 
+    console.log("STEP 1: Checking Google Play Services...");
     await GoogleSignin.hasPlayServices();
 
-    console.log("✅ STEP 2: Play Services available");
-    console.log("STEP 3: Opening Google Sign-In...");
+    /**
+     * IMPORTANT
+     * Clear previous Google session so the account picker
+     * appears every time the user connects Drive.
+     */
+    try {
+      await GoogleSignin.signOut();
+    } catch {}
 
-    const user = await GoogleSignin.signIn();
+    console.log("✅ STEP 2: Opening Google Account Picker...");
 
-    console.log("✅ STEP 4: Sign-In Success");
-    console.log(user);
+    const response = await GoogleSignin.signIn();
 
-    console.log("STEP 5: Fetching access token...");
+    console.log("✅ STEP 3: Google Account Selected");
+    console.log(response);
+
+    console.log("STEP 4: Fetching Google Tokens...");
 
     const tokens = await GoogleSignin.getTokens();
 
-    console.log("✅ STEP 6: Tokens received");
+    console.log("✅ STEP 5: Access Token Received");
     console.log(tokens);
 
     return tokens.accessToken;
@@ -40,34 +51,50 @@ export async function connectGoogleDrive(): Promise<string> {
   }
 }
 
+/**
+ * Restore existing Drive session
+ */
 export async function restoreGoogleSession(): Promise<string | null> {
   try {
     console.log("Restoring Google Session...");
 
-    await GoogleSignin.signInSilently();
+    const user = await GoogleSignin.getCurrentUser();
 
-    console.log("Session restored.");
+    if (!user) {
+      console.log("No existing Google session.");
+      return null;
+    }
 
     const tokens = await GoogleSignin.getTokens();
 
-    console.log("Tokens restored:", tokens);
+    console.log("Google session restored.");
 
     return tokens.accessToken;
   } catch (error: any) {
     console.log("Restore Session Error:", error);
 
-    if (error.code) {
-      console.log("Error Code:", error.code);
-    }
-
-    if (error.message) {
-      console.log("Error Message:", error.message);
-    }
-
     return null;
   }
 }
 
+/**
+ * Disconnect Google Drive
+ */
+export async function disconnectGoogleDrive(): Promise<void> {
+  try {
+    await GoogleSignin.revokeAccess();
+  } catch {}
+
+  try {
+    await GoogleSignin.signOut();
+  } catch {}
+
+  console.log("Google Drive disconnected.");
+}
+
+/**
+ * Fetch Drive Files
+ */
 export async function getDriveFiles(
   accessToken: string
 ): Promise<AppFile[]> {
@@ -84,6 +111,7 @@ export async function getDriveFiles(
 
   if (!response.ok) {
     const errorText = await response.text();
+
     console.log("Drive API Error:", errorText);
 
     throw new Error("Failed to fetch Google Drive files.");
@@ -91,7 +119,9 @@ export async function getDriveFiles(
 
   const data = await response.json();
 
-  console.log(`Fetched ${data.files?.length ?? 0} files from Drive.`);
+  console.log(
+    `Fetched ${data.files?.length ?? 0} files from Drive.`
+  );
 
   return (data.files || []).map((file: any) => ({
     id: file.id,

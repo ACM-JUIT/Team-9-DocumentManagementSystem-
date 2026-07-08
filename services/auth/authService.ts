@@ -12,33 +12,35 @@ import { auth } from "./firebase";
 import GoogleSignin from "./googleAuth";
 
 /**
- * Register a new user
+ * Register new user
  */
 export async function register(
   email: string,
   password: string
 ): Promise<User> {
-  const credential = await createUserWithEmailAndPassword(
-    auth,
-    email,
-    password
-  );
+  const credential =
+    await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
   return credential.user;
 }
 
 /**
- * Login existing user
+ * Login with Email & Password
  */
 export async function login(
   email: string,
   password: string
 ): Promise<User> {
-  const credential = await signInWithEmailAndPassword(
-    auth,
-    email,
-    password
-  );
+  const credential =
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
   return credential.user;
 }
@@ -47,36 +49,53 @@ export async function login(
  * Login with Google
  */
 export async function loginWithGoogle(): Promise<User> {
-  // Make sure Google Play Services are available
+  // Check Google Play Services
   await GoogleSignin.hasPlayServices();
+
+  // If an old Google session exists, clear it.
+  // This makes the account chooser appear every time.
+  try {
+    await GoogleSignin.signOut();
+  } catch {}
 
   // Open Google account picker
   const response = await GoogleSignin.signIn();
 
-  /**
-   * Firebase needs the ID Token.
-   */
   const idToken = response.data?.idToken;
 
   if (!idToken) {
     throw new Error("Google ID Token not found.");
   }
 
-  // Create Firebase credential
-  const credential = GoogleAuthProvider.credential(idToken);
+  // Firebase credential
+  const credential =
+    GoogleAuthProvider.credential(idToken);
 
-  // Sign into Firebase
-  const result = await signInWithCredential(auth, credential);
+  // Firebase Login
+  const result =
+    await signInWithCredential(
+      auth,
+      credential
+    );
 
   return result.user;
 }
 
 /**
- * Logout current user
+ * Logout user completely
  */
-export async function logout() {
+export async function logout(): Promise<void> {
+  // Firebase Logout
   await signOut(auth);
-  await GoogleSignin.signOut();
+
+  // Google Logout
+  try {
+    await GoogleSignin.revokeAccess();
+  } catch {}
+
+  try {
+    await GoogleSignin.signOut();
+  } catch {}
 }
 
 /**
@@ -87,7 +106,7 @@ export function getCurrentUser() {
 }
 
 /**
- * Listen for authentication state changes
+ * Listen to auth changes
  */
 export function subscribeToAuth(
   callback: (user: User | null) => void

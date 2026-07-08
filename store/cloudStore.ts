@@ -9,50 +9,41 @@ interface CloudStore {
 
   driveFiles: AppFile[];
 
-  setConnected: (
-    value: boolean
-  ) => void;
+  setConnected: (value: boolean) => void;
 
-  setAccessToken: (
-    token: string
-  ) => void;
+  setAccessToken: (token: string | null) => void;
 
-  setDriveFiles: (
-    files: AppFile[]
-  ) => void;
+  setDriveFiles: (files: AppFile[]) => void;
 
   logout: () => void;
 }
 
-export const useCloudStore =
-  create<CloudStore>((set) => ({
+export const useCloudStore = create<CloudStore>((set) => ({
+  connected: false,
 
-    connected: false,
+  accessToken: null,
 
-    accessToken: null,
+  driveFiles: [],
 
-    driveFiles: [],
+  setConnected: (value) =>
+    set({
+      connected: value,
+    }),
 
-    setConnected: (value) =>
-      set({
-        connected: value,
-      }),
+  setAccessToken: (token) =>
+    set({
+      accessToken: token,
+    }),
 
-    setAccessToken: (token) =>
-      set({
-        accessToken: token,
-      }),
+  setDriveFiles: (files) =>
+    set({
+      driveFiles: files,
+    }),
 
-    setDriveFiles: (files) =>
-      set({
-        driveFiles: files,
-      }),
-
-    logout: () =>
-      set({
-        connected: false,
-        accessToken: null,
-        driveFiles: [],
-      }),
-
+  logout: () =>
+    set({
+      connected: false,
+      accessToken: null,
+      driveFiles: [],
+    }),
 }));
