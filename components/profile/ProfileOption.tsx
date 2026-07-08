@@ -11,7 +11,7 @@ type Props = {
 export default function ProfileOption({
   emoji,
   title,
- subtitle,
+  subtitle,
   onPress,
   color = "#334155",
 }: Props) {
@@ -34,7 +34,12 @@ export default function ProfileOption({
         </View>
 
         <View>
-          <Text style={styles.title}>
+          <Text
+            style={[
+              styles.title,
+              title === "Logout" && styles.logoutTitle,
+            ]}
+          >
             {title}
           </Text>
 
@@ -46,7 +51,14 @@ export default function ProfileOption({
         </View>
       </View>
 
-      <Text style={styles.arrow}>›</Text>
+      <Text
+        style={[
+          styles.arrow,
+          title === "Logout" && styles.logoutArrow,
+        ]}
+      >
+        ›
+      </Text>
     </TouchableOpacity>
   );
 }
@@ -103,6 +115,10 @@ const styles = StyleSheet.create({
     color: "#F8FAFC",
   },
 
+  logoutTitle: {
+    color: "#EF4444",
+  },
+
   subtitle: {
     marginTop: 3,
     color: "#94A3B8",
@@ -114,5 +130,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#60A5FA",
     fontFamily: "Inter_600SemiBold",
+  },
+
+  logoutArrow: {
+    color: "#EF4444",
   },
 });
