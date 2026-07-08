@@ -11,9 +11,9 @@ type Props = {
 export default function ProfileOption({
   emoji,
   title,
-  subtitle,
+ subtitle,
   onPress,
-  color = "#DBEAFE",
+  color = "#334155",
 }: Props) {
   return (
     <TouchableOpacity
@@ -32,6 +32,7 @@ export default function ProfileOption({
             {emoji}
           </Text>
         </View>
+
         <View>
           <Text style={styles.title}>
             {title}
@@ -44,28 +45,42 @@ export default function ProfileOption({
           )}
         </View>
       </View>
-     <Text style={styles.arrow}>
-        ›
-      </Text>
+
+      <Text style={styles.arrow}>›</Text>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#1F2937",
     marginHorizontal: 20,
     marginTop: 15,
     borderRadius: 18,
     padding: 18,
+
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+
+    borderWidth: 1,
+    borderColor: "#374151",
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 8,
+    elevation: 5,
   },
+
   left: {
     flexDirection: "row",
     alignItems: "center",
   },
+
   iconContainer: {
     width: 48,
     height: 48,
@@ -73,21 +88,31 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginRight: 15,
+
+    borderWidth: 1,
+    borderColor: "#475569",
   },
+
   emoji: {
-    fontSize: 24,
+    fontSize: 22,
   },
+
   title: {
     fontSize: 17,
-    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
+    color: "#F8FAFC",
   },
+
   subtitle: {
     marginTop: 3,
-    color: "#6B7280",
+    color: "#94A3B8",
     fontSize: 14,
+    fontFamily: "Inter_400Regular",
   },
+
   arrow: {
-    fontSize: 26,
-    color: "#9CA3AF",
-  }
+    fontSize: 24,
+    color: "#60A5FA",
+    fontFamily: "Inter_600SemiBold",
+  },
 });

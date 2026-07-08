@@ -90,20 +90,19 @@ export default function Profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#111827",
+    backgroundColor: "#0F172A",
   },
 
   header: {
-    marginHorizontal: 24,
-    marginTop: 60,
-    marginBottom: 12,
+    marginHorizontal: 20,
+    marginTop: 55,
+    marginBottom: 10,
   },
 
   title: {
-    fontSize: 34,
+    fontSize: 32,
     fontFamily: "Inter_700Bold",
     color: "#F8FAFC",
-    letterSpacing: 0.3,
   },
 
   subtitle: {
@@ -111,15 +110,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Inter_400Regular",
     color: "#94A3B8",
-    lineHeight: 24,
   },
 
   section: {
-    fontSize: 22,
+    fontSize: 20,
     fontFamily: "Inter_700Bold",
-    marginHorizontal: 24,
+    color: "#F8FAFC",
+    marginHorizontal: 20,
     marginTop: 28,
     marginBottom: 14,
-    color: "#F8FAFC",
   },
 });
