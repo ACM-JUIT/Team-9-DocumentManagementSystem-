@@ -177,39 +177,41 @@ export default function Dashboard() {
             Connected Storage
           </Text>
 
-          <ProviderCard
-            icon="📱"
-            title="Local Storage"
-            color="#DBEAFE"
-            connected={true}
-            files={files.length}
-            storage={formatSize(totalSize)}
-          />
+          
 
           <ProviderCard
-            icon="☁️"
-            title="Google Drive"
-            color="#FEE2E2"
-            connected={connected}
-            files={driveFiles.length}
-            storage="Cloud"
-            onPress={() => {
-              if (!connected) {
-                handleGoogleLogin();
-              } else {
-                router.push("/drive");
-              }
-            }}
-          />
+  icon="📱"
+  title="Local Storage"
+  color="#2B3A4F"
+  connected={true}
+  files={files.length}
+  storage={formatSize(totalSize)}
+/>
 
-          <ProviderCard
-            icon="🪟"
-            title="Microsoft OneDrive"
-            color="#DCFCE7"
-            connected={false}
-            files={0}
-            storage="0 MB"
-          />
+<ProviderCard
+  icon="☁️"
+  title="Google Drive"
+  color="#3F2D34"
+  connected={connected}
+  files={driveFiles.length}
+  storage="Cloud"
+  onPress={() => {
+    if (!connected) {
+      handleGoogleLogin();
+    } else {
+      router.push("/drive");
+    }
+  }}
+/>
+
+<ProviderCard
+  icon="🪟"
+  title="Microsoft OneDrive"
+  color="#403456"
+  connected={false}
+  files={0}
+  storage="0 MB"
+/>
         </View>
 
         <View style={styles.section}>

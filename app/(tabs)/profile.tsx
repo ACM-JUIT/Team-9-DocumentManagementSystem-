@@ -90,31 +90,34 @@ export default function Profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F7FA",
+    backgroundColor: "#0F172A",
   },
 
   header: {
     marginHorizontal: 20,
     marginTop: 55,
+    marginBottom: 10,
   },
 
   title: {
-    fontSize: 30,
-    fontWeight: "700",
+    fontSize: 32,
+    fontFamily: "Inter_700Bold",
+    color: "#F8FAFC",
   },
 
   subtitle: {
     marginTop: 8,
     fontSize: 16,
-    color: "#6B7280",
+    fontFamily: "Inter_400Regular",
+    color: "#94A3B8",
   },
 
   section: {
-    fontSize: 18,
-    fontWeight: "700",
+    fontSize: 20,
+    fontFamily: "Inter_700Bold",
+    color: "#F8FAFC",
     marginHorizontal: 20,
-    marginTop: 25,
-    marginBottom: 10,
-    color: "#374151",
+    marginTop: 28,
+    marginBottom: 14,
   },
 });

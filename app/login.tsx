@@ -1,3 +1,5 @@
+import { useAuthStore } from "@/store/authStore";
+import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
@@ -10,7 +12,6 @@ import {
   View,
 } from "react-native";
 
-import { useAuthStore } from "@/store/authStore";
 
 export default function LoginScreen() {
   const login = useAuthStore((state) => state.login);
@@ -105,14 +106,21 @@ export default function LoginScreen() {
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.googleButton}
-        onPress={handleGoogleLogin}
-        disabled={loading}
-      >
-        <Text style={styles.googleButtonText}>
-          Continue with Google
-        </Text>
-      </TouchableOpacity>
+  style={styles.googleButton}
+  onPress={handleGoogleLogin}
+  disabled={loading}
+>
+  <Ionicons
+    name="logo-google"
+    size={20}
+    color="#FFFFFF"
+    style={styles.googleIcon}
+  />
+
+  <Text style={styles.googleButtonText}>
+    Continue with Google
+  </Text>
+</TouchableOpacity>
 
       <TouchableOpacity
         onPress={() => router.push("/register")}
@@ -210,25 +218,42 @@ const styles = StyleSheet.create({
   },
 
   googleButton: {
-    backgroundColor: "#FFFFFF",
+  backgroundColor: "#1E40AF",
 
-    borderRadius: 18,
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "center",
 
-    paddingVertical: 17,
+  paddingVertical: 17,
 
-    alignItems: "center",
+  marginTop: 16,
 
-    marginTop: 16,
+  borderRadius: 18,
 
-    borderWidth: 1,
-    borderColor: "#D1D5DB",
+  borderWidth: 1,
+  borderColor: "#2563EB",
+
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: 4,
   },
+  shadowOpacity: 0.22,
+  shadowRadius: 8,
 
-  googleButtonText: {
-    color: "#111827",
-    fontSize: 16,
-    fontFamily: "Inter_600SemiBold",
-  },
+  elevation: 6,
+},
+
+googleIcon: {
+  marginRight: 10,
+},
+
+googleButtonText: {
+  color: "#FFFFFF",
+  fontSize: 16,
+  fontFamily: "Inter_600SemiBold",
+  letterSpacing: 0.3,
+},
 
   register: {
     marginTop: 24,
