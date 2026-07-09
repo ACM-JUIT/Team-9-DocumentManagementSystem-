@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "277971490418-6keaha3ctqo9h5pridvoepqvho259u3a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amityadav.nexusdocs",
+            "certificate_hash": "d98c48bff628e483a009b493ca5495aac35c415b"
+          }
+        },
+        {
           "client_id": "277971490418-b0vpv7uf5u13u1vlgs02dcesbvn1gcq2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
