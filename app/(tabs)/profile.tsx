@@ -1,5 +1,11 @@
 import { router } from "expo-router";
-import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 import ProfileCard from "@/components/profile/ProfileCard";
 import ProfileOption from "@/components/profile/ProfileOption";
@@ -47,6 +53,11 @@ export default function Profile() {
         title="Edit Profile"
         subtitle="Update your profile"
         color="#DBEAFE"
+        onPress={() =>
+          router.push({
+            pathname: "/profile/edit",
+          })
+        }
       />
 
       <ProfileOption
