@@ -5,6 +5,7 @@ import {
   getFiles,
   saveFile,
   StoredFile,
+  toggleFavorite,
 } from "@/services/storage/storage";
 
 interface FileStore {
@@ -15,10 +16,11 @@ interface FileStore {
   addFile: (file: StoredFile) => Promise<void>;
 
   removeFile: (id: string) => Promise<void>;
+
+  favoriteFile: (id: string) => Promise<void>;
 }
 
 export const useFileStore = create<FileStore>((set) => ({
-
   files: [],
 
   loadFiles: async () => {
@@ -30,17 +32,14 @@ export const useFileStore = create<FileStore>((set) => ({
   },
 
   addFile: async (file) => {
-
     await saveFile(file);
 
     set((state) => ({
       files: [file, ...state.files],
     }));
-
   },
 
   removeFile: async (id) => {
-
     await deleteFile(id);
 
     set((state) => ({
@@ -48,7 +47,20 @@ export const useFileStore = create<FileStore>((set) => ({
         (file) => file.id !== id
       ),
     }));
-
   },
 
+  favoriteFile: async (id) => {
+    await toggleFavorite(id);
+
+    set((state) => ({
+      files: state.files.map((file) =>
+        file.id === id
+          ? {
+              ...file,
+              isFavorite: !file.isFavorite,
+            }
+          : file
+      ),
+    }));
+  },
 }));

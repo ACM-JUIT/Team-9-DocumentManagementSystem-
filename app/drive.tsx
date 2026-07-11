@@ -13,11 +13,25 @@ import UniversalFileCard from "@/components/file/UniversalFileCard";
 import { openFile } from "@/services/open/openFile";
 
 import { useCloudStore } from "@/store/cloudStore";
+import { useFileStore } from "@/store/fileStore";
+
 import { AppFile } from "@/types/file";
 
 export default function DriveScreen() {
   const driveFiles = useCloudStore(
     (state) => state.driveFiles
+  );
+
+  const files = useFileStore(
+    (state) => state.files
+  );
+
+  const addFile = useFileStore(
+    (state) => state.addFile
+  );
+
+  const favoriteFile = useFileStore(
+    (state) => state.favoriteFile
   );
 
   const [selectedFile, setSelectedFile] =
@@ -78,11 +92,42 @@ export default function DriveScreen() {
 
           setMenuVisible(false);
         }}
-        onFavorite={() => {
-          Alert.alert(
-            "Coming Soon",
-            "Favorites feature will be added next."
+        onFavorite={async () => {
+          if (!selectedFile) {
+            setMenuVisible(false);
+            return;
+          }
+
+          const existingFile = files.find(
+            (file) => file.id === selectedFile.id
           );
+
+          if (existingFile) {
+            if (!existingFile.isFavorite) {
+              await favoriteFile(existingFile.id);
+
+              Alert.alert(
+                "Added to Favorites",
+                "The Google Drive file has been added to your favorites."
+              );
+            } else {
+              Alert.alert(
+                "Already in Favorites",
+                "This Google Drive file is already in your favorites."
+              );
+            }
+          } else {
+            await addFile({
+              ...selectedFile,
+              storage: "Google Drive",
+              isFavorite: true,
+            });
+
+            Alert.alert(
+              "Added to Favorites",
+              "The Google Drive file has been added to your favorites."
+            );
+          }
 
           setMenuVisible(false);
         }}

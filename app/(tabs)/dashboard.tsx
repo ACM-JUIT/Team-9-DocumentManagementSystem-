@@ -27,6 +27,8 @@ import {
   shareFile,
 } from "@/services/open/openFile";
 
+
+
 import { useCloudStore } from "@/store/cloudStore";
 import { useFileStore } from "@/store/fileStore";
 
@@ -35,11 +37,15 @@ import { AppFile } from "@/types/file";
 export default function Dashboard() {
   const files = useFileStore((state) => state.files);
 
-  const loadFiles = useFileStore(
-    (state) => state.loadFiles
-  );
+const loadFiles = useFileStore(
+  (state) => state.loadFiles
+);
 
-  const [search, setSearch] = useState("");
+const favoriteFile = useFileStore(
+  (state) => state.favoriteFile
+);
+
+const [search, setSearch] = useState("");
 
   // ---------------- Google Drive Store ----------------
 
@@ -268,14 +274,24 @@ export default function Dashboard() {
 
     setMenuVisible(false);
   }}
-  onFavorite={() => {
-    Alert.alert(
-      "Coming Soon",
-      "Favorite feature will be implemented next."
-    );
+  onFavorite={async () => {
+  if (selectedFile) {
+    await favoriteFile(selectedFile.id);
 
-    setMenuVisible(false);
-  }}
+    Alert.alert(
+      selectedFile.isFavorite
+        ? "Removed from Favorites"
+        : "Added to Favorites",
+      selectedFile.isFavorite
+        ? "The document has been removed from your favorites."
+        : "The document has been added to your favorites."
+    );
+  }
+
+  setMenuVisible(false);
+}}
+
+
   onDetails={() => {
     Alert.alert(
       "File Details",

@@ -50,18 +50,20 @@ export default function Profile() {
       />
 
       <ProfileOption
-        emoji="📂"
-        title="My Documents"
-        subtitle="View all your files"
-        color="#DCFCE7"
-      />
+  emoji="📂"
+  title="My Documents"
+  subtitle="View all your files"
+  color="#DCFCE7"
+  onPress={() => router.push("/my-documents")}
+/>
 
       <ProfileOption
-        emoji="⭐"
-        title="Favorites"
-        subtitle="Access starred files"
-        color="#FEF3C7"
-      />
+  emoji="⭐"
+  title="Favorites"
+  subtitle="Access starred files"
+  color="#FEF3C7"
+  onPress={() => router.push("/favorites")}
+/>
 
       <Text style={styles.section}>
         Preferences
