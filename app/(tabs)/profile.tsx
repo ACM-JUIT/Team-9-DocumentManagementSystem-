@@ -81,11 +81,12 @@ export default function Profile() {
       </Text>
 
       <ProfileOption
-        emoji="⚙️"
-        title="Settings"
-        subtitle="Manage app preferences"
-        color="#E9D5FF"
-      />
+  emoji="⚙️"
+  title="Settings"
+  subtitle="Manage app preferences"
+  color="#E9D5FF"
+  onPress={() => router.push("/settings")}
+/>
 
       <ProfileOption
         emoji="🚪"

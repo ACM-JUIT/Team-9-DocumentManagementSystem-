@@ -1,10 +1,13 @@
 import {
   createUserWithEmailAndPassword,
+  EmailAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
+  reauthenticateWithCredential,
   signInWithCredential,
   signInWithEmailAndPassword,
   signOut,
+  updatePassword,
   User,
 } from "firebase/auth";
 
@@ -52,13 +55,12 @@ export async function loginWithGoogle(): Promise<User> {
   // Check Google Play Services
   await GoogleSignin.hasPlayServices();
 
-  // If an old Google session exists, clear it.
-  // This makes the account chooser appear every time.
+  // Always show account picker
   try {
     await GoogleSignin.signOut();
   } catch {}
 
-  // Open Google account picker
+  // Open Google Sign-In
   const response = await GoogleSignin.signIn();
 
   const idToken = response.data?.idToken;
@@ -67,11 +69,9 @@ export async function loginWithGoogle(): Promise<User> {
     throw new Error("Google ID Token not found.");
   }
 
-  // Firebase credential
   const credential =
     GoogleAuthProvider.credential(idToken);
 
-  // Firebase Login
   const result =
     await signInWithCredential(
       auth,
@@ -85,10 +85,10 @@ export async function loginWithGoogle(): Promise<User> {
  * Logout user completely
  */
 export async function logout(): Promise<void> {
-  // Firebase Logout
+  // Firebase logout
   await signOut(auth);
 
-  // Google Logout
+  // Google logout
   try {
     await GoogleSignin.revokeAccess();
   } catch {}
@@ -96,6 +96,53 @@ export async function logout(): Promise<void> {
   try {
     await GoogleSignin.signOut();
   } catch {}
+}
+
+/**
+ * Change password
+ * (Email/Password accounts only)
+ */
+export async function changePassword(
+  currentPassword: string,
+  newPassword: string
+): Promise<void> {
+  const user = auth.currentUser;
+
+  if (!user) {
+    throw new Error("No authenticated user.");
+  }
+
+  if (!user.email) {
+    throw new Error("User email not found.");
+  }
+
+  const isGoogleUser =
+    user.providerData.some(
+      (provider) =>
+        provider.providerId === "google.com"
+    );
+
+  if (isGoogleUser) {
+    throw new Error(
+      "This account uses Google Sign-In. Please change your password from your Google Account."
+    );
+  }
+
+  const credential =
+    EmailAuthProvider.credential(
+      user.email,
+      currentPassword
+    );
+
+  await reauthenticateWithCredential(
+    user,
+    credential
+  );
+
+  await updatePassword(
+    user,
+    newPassword
+  );
 }
 
 /**
@@ -111,5 +158,8 @@ export function getCurrentUser() {
 export function subscribeToAuth(
   callback: (user: User | null) => void
 ) {
-  return onAuthStateChanged(auth, callback);
+  return onAuthStateChanged(
+    auth,
+    callback
+  );
 }
