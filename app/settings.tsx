@@ -70,17 +70,12 @@ export default function SettingsScreen() {
       </Text>
 
       <ProfileOption
-        emoji="🌙"
-        title="Theme"
-        subtitle="Light • Dark • System"
-        color="#DBEAFE"
-        onPress={() =>
-          Alert.alert(
-            "Coming Soon",
-            "Theme settings will be available soon."
-          )
-        }
-      />
+  emoji="🌙"
+  title="Theme"
+  subtitle="Light • Dark • System"
+  color="#DBEAFE"
+  onPress={() => router.push("/theme")}
+/>
 
       <ProfileOption
         emoji="☁️"
@@ -130,12 +125,7 @@ export default function SettingsScreen() {
         title="About NexusDocs"
         subtitle="Version, developers and licenses"
         color="#E9D5FF"
-        onPress={() =>
-          Alert.alert(
-            "NexusDocs",
-            "Version 1.0.0\n\nDeveloped by Team 9\nACM JUIT"
-          )
-        }
+       onPress={() => router.push("/about")}
       />
 
       <ProfileOption
@@ -143,12 +133,7 @@ export default function SettingsScreen() {
         title="Privacy Policy"
         subtitle="Read our privacy policy"
         color="#DBEAFE"
-        onPress={() =>
-          Alert.alert(
-            "Coming Soon",
-            "Privacy Policy will be added soon."
-          )
-        }
+        onPress={() => router.push("/privacy-policy")}
       />
 
       <ProfileOption
@@ -156,12 +141,7 @@ export default function SettingsScreen() {
         title="Terms & Conditions"
         subtitle="Read terms of service"
         color="#DCFCE7"
-        onPress={() =>
-          Alert.alert(
-            "Coming Soon",
-            "Terms & Conditions will be added soon."
-          )
-        }
+        onPress={() => router.push("/terms")}
       />
 
       <ProfileOption
@@ -169,12 +149,7 @@ export default function SettingsScreen() {
         title="Contact Us"
         subtitle="Reach the developers"
         color="#FEE2E2"
-        onPress={() =>
-          Alert.alert(
-            "Contact Us",
-            "Email: nexusdocs.team@gmail.com"
-          )
-        }
+        onPress={() => router.push("/contact-us")}
       />
 
       <View style={{ height: 40 }} />
