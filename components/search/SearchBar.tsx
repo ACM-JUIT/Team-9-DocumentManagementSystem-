@@ -1,7 +1,15 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { StyleSheet, TextInput, View } from "react-native";
 
-export default function SearchBar() {
+type Props = {
+  value: string;
+  onChangeText: (text: string) => void;
+};
+
+export default function SearchBar({
+  value,
+  onChangeText,
+}: Props) {
   return (
     <View style={styles.container}>
       <MaterialIcons
@@ -9,10 +17,16 @@ export default function SearchBar() {
         size={22}
         color="#94A3B8"
       />
+
       <TextInput
+        value={value}
+        onChangeText={onChangeText}
         placeholder="Search documents..."
         placeholderTextColor="#94A3B8"
         style={styles.input}
+        autoCorrect={false}
+        autoCapitalize="none"
+        clearButtonMode="while-editing"
       />
     </View>
   );

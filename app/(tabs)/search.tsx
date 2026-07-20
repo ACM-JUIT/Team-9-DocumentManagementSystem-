@@ -1,6 +1,4 @@
-import CategoryCard from "@/components/search/CategoryCard";
-import RecentSearchCard from "@/components/search/RecentSearchCard";
-import SearchBar from "@/components/search/SearchBar";
+import { useEffect, useMemo, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -8,8 +6,77 @@ import {
   View,
 } from "react-native";
 
+import CategoryCard from "@/components/search/CategoryCard";
+import SearchBar from "@/components/search/SearchBar";
+import SearchResultCard from "@/components/search/SearchResultCard";
+
+import { useCloudStore } from "@/store/cloudStore";
+import { useFileStore } from "@/store/fileStore";
+
+import {
+  mergeFiles,
+  SearchCategory,
+  searchFiles,
+} from "@/services/search/searchService";
+
+import { AppFile } from "@/types/file";
+
 export default function Search() {
-  return (
+  const {
+    files,
+    loadFiles,
+  } = useFileStore();
+
+  const { driveFiles } = useCloudStore();
+
+  const [query, setQuery] = useState("");
+
+  const [category, setCategory] =
+    useState<SearchCategory>("All");
+
+  useEffect(() => {
+    loadFiles();
+  }, []);
+
+  const allFiles = useMemo(() => {
+    return mergeFiles(files, driveFiles);
+  }, [files, driveFiles]);
+
+  const filteredFiles: AppFile[] = useMemo(() => {
+    return searchFiles(
+      allFiles,
+      query,
+      category
+    );
+  }, [allFiles, query, category]);
+
+  function renderResults() {
+    if (filteredFiles.length === 0) {
+      return (
+        <View style={styles.emptyContainer}>
+          <Text style={styles.emptyIcon}>
+            🔍
+          </Text>
+
+          <Text style={styles.emptyTitle}>
+            No files found
+          </Text>
+
+          <Text style={styles.emptySubtitle}>
+            Try searching with another keyword.
+          </Text>
+        </View>
+      );
+    }
+
+    return filteredFiles.map((file) => (
+      <SearchResultCard
+        key={file.id}
+        file={file}
+      />
+    ));
+  }
+    return (
     <ScrollView
       style={styles.container}
       showsVerticalScrollIndicator={false}
@@ -24,25 +91,9 @@ export default function Search() {
         </Text>
       </View>
 
-      <SearchBar />
-
-      <Text style={styles.section}>
-        Recent Searches
-      </Text>
-
-      <RecentSearchCard
-        title="Resume.pdf"
-        type="PDF Document"
-      />
-
-      <RecentSearchCard
-        title="Notes.docx"
-        type="Word Document"
-      />
-
-      <RecentSearchCard
-        title="Vacation.jpg"
-        type="Image"
+      <SearchBar
+        value={query}
+        onChangeText={setQuery}
       />
 
       <Text style={styles.section}>
@@ -53,23 +104,69 @@ export default function Search() {
         <CategoryCard
           icon="picture-as-pdf"
           title="PDF"
+          selected={category === "PDF"}
+          onPress={() =>
+            setCategory(
+              category === "PDF"
+                ? "All"
+                : "PDF"
+            )
+          }
         />
 
         <CategoryCard
           icon="image"
           title="Images"
+          selected={category === "Images"}
+          onPress={() =>
+            setCategory(
+              category === "Images"
+                ? "All"
+                : "Images"
+            )
+          }
         />
 
         <CategoryCard
           icon="description"
           title="Documents"
+          selected={
+            category === "Documents"
+          }
+          onPress={() =>
+            setCategory(
+              category === "Documents"
+                ? "All"
+                : "Documents"
+            )
+          }
         />
 
         <CategoryCard
           icon="movie"
           title="Videos"
+          selected={category === "Videos"}
+          onPress={() =>
+            setCategory(
+              category === "Videos"
+                ? "All"
+                : "Videos"
+            )
+          }
         />
       </View>
+
+      <Text style={styles.section}>
+        Results
+      </Text>
+
+      {renderResults()}
+
+      <View
+        style={{
+          height: 40,
+        }}
+      />
     </ScrollView>
   );
 }
@@ -103,7 +200,7 @@ const styles = StyleSheet.create({
 
   section: {
     marginHorizontal: 20,
-    marginTop: 32,
+    marginTop: 30,
     marginBottom: 14,
     fontSize: 20,
     fontFamily: "Inter_700Bold",
@@ -116,6 +213,31 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    marginBottom: 35,
+  },
+
+  emptyContainer: {
+    marginTop: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+  },
+
+  emptyIcon: {
+    fontSize: 60,
+  },
+
+  emptyTitle: {
+    marginTop: 20,
+    fontSize: 22,
+    fontFamily: "Inter_700Bold",
+    color: "#F8FAFC",
+  },
+
+  emptySubtitle: {
+    marginTop: 8,
+    fontSize: 16,
+    fontFamily: "Inter_400Regular",
+    color: "#94A3B8",
+    textAlign: "center",
   },
 });
