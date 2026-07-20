@@ -7,6 +7,7 @@ import {
 } from "react-native";
 
 import CategoryCard from "@/components/search/CategoryCard";
+import RecentSearchItem from "@/components/search/RecentSearchItem";
 import SearchBar from "@/components/search/SearchBar";
 import SearchResultCard from "@/components/search/SearchResultCard";
 
@@ -19,13 +20,17 @@ import {
   searchFiles,
 } from "@/services/search/searchService";
 
+import {
+  clearRecentSearches,
+  getRecentSearches,
+  removeRecentSearch,
+  saveRecentSearch,
+} from "@/services/search/recentSearchService";
+
 import { AppFile } from "@/types/file";
 
 export default function Search() {
-  const {
-    files,
-    loadFiles,
-  } = useFileStore();
+  const { files, loadFiles } = useFileStore();
 
   const { driveFiles } = useCloudStore();
 
@@ -34,21 +39,66 @@ export default function Search() {
   const [category, setCategory] =
     useState<SearchCategory>("All");
 
+  const [recentSearches, setRecentSearches] =
+    useState<string[]>([]);
+
   useEffect(() => {
     loadFiles();
+    loadHistory();
   }, []);
+
+  async function loadHistory() {
+    const history =
+      await getRecentSearches();
+
+    setRecentSearches(history);
+  }
 
   const allFiles = useMemo(() => {
     return mergeFiles(files, driveFiles);
   }, [files, driveFiles]);
 
-  const filteredFiles: AppFile[] = useMemo(() => {
-    return searchFiles(
-      allFiles,
-      query,
-      category
-    );
-  }, [allFiles, query, category]);
+  const filteredFiles: AppFile[] =
+    useMemo(() => {
+      return searchFiles(
+        allFiles,
+        query,
+        category
+      );
+    }, [allFiles, query, category]);
+
+  useEffect(() => {
+    if (query.trim().length < 2) return;
+
+    const timer = setTimeout(async () => {
+      await saveRecentSearch(query);
+
+      const history =
+        await getRecentSearches();
+
+      setRecentSearches(history);
+    }, 500);
+
+    return () =>
+      clearTimeout(timer);
+  }, [query]);
+
+  async function deleteSearch(
+    search: string
+  ) {
+    await removeRecentSearch(search);
+
+    const history =
+      await getRecentSearches();
+
+    setRecentSearches(history);
+  }
+
+  async function clearHistory() {
+    await clearRecentSearches();
+
+    setRecentSearches([]);
+  }
 
   function renderResults() {
     if (filteredFiles.length === 0) {
@@ -63,7 +113,7 @@ export default function Search() {
           </Text>
 
           <Text style={styles.emptySubtitle}>
-            Try searching with another keyword.
+            Try another keyword.
           </Text>
         </View>
       );
@@ -95,6 +145,41 @@ export default function Search() {
         value={query}
         onChangeText={setQuery}
       />
+
+      {query.length === 0 &&
+        recentSearches.length > 0 && (
+          <>
+            <View
+              style={styles.historyHeader}
+            >
+              <Text style={styles.section}>
+                Recent Searches
+              </Text>
+
+              <Text
+                style={styles.clear}
+                onPress={clearHistory}
+              >
+                Clear
+              </Text>
+            </View>
+
+            {recentSearches.map(
+              (search) => (
+                <RecentSearchItem
+                  key={search}
+                  query={search}
+                  onPress={() =>
+                    setQuery(search)
+                  }
+                  onDelete={() =>
+                    deleteSearch(search)
+                  }
+                />
+              )
+            )}
+          </>
+        )}
 
       <Text style={styles.section}>
         Categories
@@ -131,11 +216,13 @@ export default function Search() {
           icon="description"
           title="Documents"
           selected={
-            category === "Documents"
+            category ===
+            "Documents"
           }
           onPress={() =>
             setCategory(
-              category === "Documents"
+              category ===
+                "Documents"
                 ? "All"
                 : "Documents"
             )
@@ -185,7 +272,8 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 32,
-    fontFamily: "Inter_700Bold",
+    fontFamily:
+      "Inter_700Bold",
     color: "#F8FAFC",
     letterSpacing: 0.3,
   },
@@ -193,7 +281,8 @@ const styles = StyleSheet.create({
   subtitle: {
     marginTop: 8,
     fontSize: 16,
-    fontFamily: "Inter_400Regular",
+    fontFamily:
+      "Inter_400Regular",
     color: "#94A3B8",
     lineHeight: 24,
   },
@@ -203,8 +292,25 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 14,
     fontSize: 20,
-    fontFamily: "Inter_700Bold",
+    fontFamily:
+      "Inter_700Bold",
     color: "#F8FAFC",
+  },
+
+  historyHeader: {
+    marginHorizontal: 20,
+    marginTop: 25,
+    flexDirection: "row",
+    justifyContent:
+      "space-between",
+    alignItems: "center",
+  },
+
+  clear: {
+    color: "#60A5FA",
+    fontSize: 15,
+    fontFamily:
+      "Inter_600SemiBold",
   },
 
   grid: {
@@ -212,7 +318,8 @@ const styles = StyleSheet.create({
     marginTop: 8,
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "space-between",
+    justifyContent:
+      "space-between",
   },
 
   emptyContainer: {
@@ -229,14 +336,16 @@ const styles = StyleSheet.create({
   emptyTitle: {
     marginTop: 20,
     fontSize: 22,
-    fontFamily: "Inter_700Bold",
+    fontFamily:
+      "Inter_700Bold",
     color: "#F8FAFC",
   },
 
   emptySubtitle: {
     marginTop: 8,
     fontSize: 16,
-    fontFamily: "Inter_400Regular",
+    fontFamily:
+      "Inter_400Regular",
     color: "#94A3B8",
     textAlign: "center",
   },

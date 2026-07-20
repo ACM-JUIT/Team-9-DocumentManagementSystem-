@@ -1,3 +1,4 @@
+import { openFile } from "@/services/open/openFile";
 import { AppFile } from "@/types/file";
 import { MaterialIcons } from "@expo/vector-icons";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -79,10 +80,16 @@ export default function SearchResultCard({
 
   return (
     <TouchableOpacity
-      activeOpacity={0.8}
-      style={styles.card}
-      onPress={onPress}
-    >
+  activeOpacity={0.8}
+  style={styles.card}
+  onPress={() => {
+    if (onPress) {
+      onPress();
+    } else {
+      openFile(file);
+    }
+  }}
+>
       <View
         style={[
           styles.iconContainer,
