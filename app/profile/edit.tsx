@@ -1,27 +1,34 @@
 import { auth } from "@/services/auth/firebase";
 import {
-    loadProfileImage,
-    pickProfileImage,
+  loadProfileImage,
+  pickProfileImage,
 } from "@/services/profile/profileService";
+
+import { useAuthStore } from "@/store/authStore";
 import { useProfileStore } from "@/store/profileStore";
 
 import { router } from "expo-router";
 import { updateProfile } from "firebase/auth";
 import { useEffect, useState } from "react";
+
 import {
-    ActivityIndicator,
-    Alert,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 export default function EditProfileScreen() {
   const user = auth.currentUser;
+
+  const refreshUser = useAuthStore(
+    (state) => state.refreshUser
+  );
 
   const profileImage = useProfileStore(
     (state) => state.profileImage
@@ -66,7 +73,10 @@ export default function EditProfileScreen() {
 
   async function handleSave() {
     if (!user) {
-      Alert.alert("Error", "No user found.");
+      Alert.alert(
+        "Error",
+        "No user found."
+      );
       return;
     }
 
@@ -84,6 +94,23 @@ export default function EditProfileScreen() {
       await updateProfile(user, {
         displayName: displayName.trim(),
       });
+
+      // Refresh Firebase user
+      await user.reload();
+
+      // Update Zustand store
+      refreshUser(auth.currentUser!);
+
+      // Debug logs
+      console.log(
+        "Current Firebase Name:",
+        auth.currentUser?.displayName
+      );
+
+      console.log(
+        "Store User Name:",
+        useAuthStore.getState().user?.displayName
+      );
 
       Alert.alert(
         "Success",
@@ -148,7 +175,10 @@ export default function EditProfileScreen() {
       <TextInput
         editable={false}
         value={user?.email ?? ""}
-        style={[styles.input, styles.disabled]}
+        style={[
+          styles.input,
+          styles.disabled,
+        ]}
       />
 
       <TouchableOpacity

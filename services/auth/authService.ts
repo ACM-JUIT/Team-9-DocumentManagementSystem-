@@ -2,7 +2,7 @@ import {
   createUserWithEmailAndPassword,
   EmailAuthProvider,
   GoogleAuthProvider,
-  onAuthStateChanged,
+  onIdTokenChanged,
   reauthenticateWithCredential,
   signInWithCredential,
   signInWithEmailAndPassword,
@@ -52,15 +52,12 @@ export async function login(
  * Login with Google
  */
 export async function loginWithGoogle(): Promise<User> {
-  // Check Google Play Services
   await GoogleSignin.hasPlayServices();
 
-  // Always show account picker
   try {
     await GoogleSignin.signOut();
   } catch {}
 
-  // Open Google Sign-In
   const response = await GoogleSignin.signIn();
 
   const idToken = response.data?.idToken;
@@ -82,13 +79,11 @@ export async function loginWithGoogle(): Promise<User> {
 }
 
 /**
- * Logout user completely
+ * Logout
  */
 export async function logout(): Promise<void> {
-  // Firebase logout
   await signOut(auth);
 
-  // Google logout
   try {
     await GoogleSignin.revokeAccess();
   } catch {}
@@ -99,8 +94,7 @@ export async function logout(): Promise<void> {
 }
 
 /**
- * Change password
- * (Email/Password accounts only)
+ * Change Password
  */
 export async function changePassword(
   currentPassword: string,
@@ -146,19 +140,19 @@ export async function changePassword(
 }
 
 /**
- * Current logged in user
+ * Current user
  */
 export function getCurrentUser() {
   return auth.currentUser;
 }
 
 /**
- * Listen to auth changes
+ * Listen for auth/profile changes
  */
 export function subscribeToAuth(
   callback: (user: User | null) => void
 ) {
-  return onAuthStateChanged(
+  return onIdTokenChanged(
     auth,
     callback
   );

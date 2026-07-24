@@ -6,12 +6,14 @@ import {
   View,
 } from "react-native";
 
-import { auth } from "@/services/auth/firebase";
 import { loadProfileImage } from "@/services/profile/profileService";
+import { useAuthStore } from "@/store/authStore";
 import { useProfileStore } from "@/store/profileStore";
 
 export default function ProfileCard() {
-  const user = auth.currentUser;
+  const user = useAuthStore(
+    (state) => state.user
+  );
 
   const profileImage = useProfileStore(
     (state) => state.profileImage

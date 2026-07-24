@@ -29,6 +29,8 @@ interface AuthStore {
   ) => Promise<void>;
 
   logout: () => Promise<void>;
+
+  refreshUser: (user: User) => void;
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -39,7 +41,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
   initialize: () => {
     const unsubscribe = subscribeToAuth((user) => {
       set({
-        user,
+        user: user ? ({ ...user } as User) : null,
         loading: false,
       });
     });
@@ -51,7 +53,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
     const user = await login(email, password);
 
     set({
-      user,
+      user: { ...user } as User,
     });
   },
 
@@ -59,7 +61,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
     const user = await loginWithGoogle();
 
     set({
-      user,
+      user: { ...user } as User,
     });
   },
 
@@ -67,7 +69,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
     const user = await register(email, password);
 
     set({
-      user,
+      user: { ...user } as User,
     });
   },
 
@@ -77,6 +79,12 @@ export const useAuthStore = create<AuthStore>((set) => ({
     set({
       user: null,
       loading: false,
+    });
+  },
+
+  refreshUser: (user: User) => {
+    set({
+      user: { ...user } as User,
     });
   },
 }));
