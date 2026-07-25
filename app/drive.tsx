@@ -21,6 +21,7 @@ export default function DriveScreen() {
   const driveFiles = useCloudStore(
     (state) => state.driveFiles
   );
+  console.log("Drive Files:", driveFiles);
 
   const files = useFileStore(
     (state) => state.files
@@ -45,6 +46,11 @@ export default function DriveScreen() {
     setMenuVisible(true);
   }
 
+  console.log("Drive Files Count:", driveFiles.length);
+
+if (driveFiles.length > 0) {
+  console.log("First File:", driveFiles[0]);
+}
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>
@@ -52,19 +58,18 @@ export default function DriveScreen() {
       </Text>
 
       <FlatList
-        data={driveFiles}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <UniversalFileCard
-            file={item}
-            onMenuPress={() => openMenu(item)}
-          />
-        )}
-        contentContainerStyle={{
-          paddingBottom: 40,
-        }}
-      />
-
+  data={driveFiles}
+  keyExtractor={(item) => item.id}
+  renderItem={({ item }) => (
+    <UniversalFileCard
+      file={item}
+      onMenuPress={() => openMenu(item)}
+    />
+  )}
+  contentContainerStyle={{
+    paddingBottom: 40,
+  }}
+/>
       <FileActionMenu
         visible={menuVisible}
         file={selectedFile}
