@@ -1,50 +1,274 @@
-# Welcome to your Expo app 👋
+# 📄 NexusDocs
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<p align="center">
+  <b>A modern cross-platform document management application built with React Native, Expo and Firebase.</b>
+</p>
 
-## Get started
+<p align="center">
+Organize, access, and manage documents from local storage and Google Drive through a unified, secure and intuitive interface.
+</p>
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## ✨ Key Highlights
 
-2. Start the app
+- 📂 Unified Local & Cloud Document Management
+- ☁️ Google Drive Integration
+- 🔐 Firebase Authentication
+- 📱 Modern Cross-Platform Mobile Application
+- 🌙 Beautiful Dark Theme UI
+- ⚡ Fast & Lightweight Architecture
+- 🔄 Persistent User Sessions
+- 📊 Storage Dashboard & Analytics
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## ✨ Features
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### 📂 Document Management
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- Browse and manage local documents
+- Unified file cards for all storage providers
+- File type detection with custom icons
+- Storage overview dashboard
+- Quick access to recent files
 
-## Get a fresh project
+### ☁️ Google Drive Integration
 
-When you're ready, run:
+- Secure Google Sign-In
+- Google Drive Authentication
+- Browse Google Drive files
+- Automatic session restoration
+- Unified experience for local and cloud documents
 
-```bash
-npm run reset-project
+### 📊 Storage Center
+
+- Storage statistics
+- Connected cloud providers
+- Recent files
+- Quick Actions
+- Beautiful dashboard interface
+
+### 🎨 User Experience
+
+- Material-inspired UI
+- Dark Theme
+- Responsive layouts
+- Smooth navigation
+- Optimized for Android
+
+---
+
+# 🛠 Tech Stack
+
+| Category | Technology |
+|----------|------------|
+| Framework | React Native |
+| Platform | Expo SDK 54 |
+| Language | TypeScript |
+| Navigation | Expo Router |
+| Authentication | Firebase Authentication |
+| Cloud Storage | Google Drive API |
+| State Management | Zustand |
+| Local Storage | AsyncStorage |
+| Icons | Expo Vector Icons |
+
+---
+
+# 📱 Application Screens
+
+- Login
+- Register
+- Home Dashboard
+- Storage Center
+- Google Drive
+- My Documents
+- Favorites
+- Profile
+- Settings
+
+---
+
+# 📂 Project Structure
+
+```
+android/
+app/
+assets/
+components/
+constants/
+hooks/
+ios/
+scripts/
+services/
+store/
+types/
+utils/
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+# 🚀 Getting Started
 
-To learn more about developing your project with Expo, look at the following resources:
+## Clone Repository
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+git clone https://github.com/ACM-JUIT/Team-9-DocumentManagementSystem-.git
+```
 
-## Join the community
+```bash
+cd Team-9-DocumentManagementSystem-
+```
 
-Join our community of developers creating universal apps.
+## Install Dependencies
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+npm install
+```
+
+or
+
+```bash
+yarn
+```
+
+---
+
+## Configure Environment
+
+Create a `.env` file and configure Firebase.
+
+```env
+EXPO_PUBLIC_FIREBASE_API_KEY=
+EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=
+EXPO_PUBLIC_FIREBASE_PROJECT_ID=
+EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=
+EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+EXPO_PUBLIC_FIREBASE_APP_ID=
+```
+
+Also configure:
+
+- Firebase Authentication
+- Google Cloud Console
+- Google Drive API
+- OAuth Client IDs
+
+---
+
+## Run the Project
+
+```bash
+npx expo start
+```
+
+Android
+
+```bash
+npx expo run:android
+```
+
+Development Build
+
+```bash
+eas build --profile development --platform android
+```
+
+---
+
+# 📸 Screenshots
+
+> Screenshots and demo GIFs will be added soon.
+
+---
+
+# 📌 Roadmap
+
+- [x] Firebase Authentication
+- [x] Google Sign-In
+- [x] Google Drive Integration
+- [x] Storage Dashboard
+- [x] Universal File Cards
+- [x] Recent Files
+- [ ] Google Drive File Download
+- [ ] Offline File Access
+- [ ] File Preview
+- [ ] Global File Search
+- [ ] Cloud Sync Improvements
+- [ ] OneDrive Integration
+- [ ] Dropbox Integration
+- [ ] iOS Release
+
+---
+
+# 🔒 Security
+
+- Secure Firebase Authentication
+- Google OAuth 2.0 Authentication
+- Persistent Login Sessions
+- Secure Local Storage
+- Protected User Data
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repository
+
+2. Create a feature branch
+
+```bash
+git checkout -b feature/your-feature
+```
+
+3. Commit your changes
+
+```bash
+git commit -m "Add your feature"
+```
+
+4. Push to GitHub
+
+```bash
+git push origin feature/your-feature
+```
+
+5. Open a Pull Request
+
+---
+
+# 👥 Team 9 – Document Management System
+
+Developed as a collaborative project under **ACM Student Chapter, Jaypee University of Information Technology (JUIT).**
+
+## Repository
+
+**GitHub:**  
+https://github.com/ACM-JUIT/Team-9-DocumentManagementSystem-
+
+## Team Members
+
+- Amit Yadav — @amyyy2303
+- Shriya — @shriyahehe
+- Shubhranshi Srivastava — @shubhranshisrivastava-xoxo
+- Divyansh Walia — @divyanshwalia06-ux
+---
+
+# 👨‍💻 Author
+
+**Team 9 – Document Management System**
+
+ACM Student Chapter  
+Jaypee University of Information Technology (JUIT)
+
+**Repository:**  
+https://github.com/ACM-JUIT/Team-9-DocumentManagementSystem-
+
+---
+
+<p align="center">
+Developed with ❤️ by <b>Team 9 – Document Management System</b><br>
+ACM Student Chapter, Jaypee University of Information Technology (JUIT)
+</p>
