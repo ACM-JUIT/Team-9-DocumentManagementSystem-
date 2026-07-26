@@ -22,7 +22,7 @@ export default function SearchBar({
         value={value}
         onChangeText={onChangeText}
         placeholder="Search documents..."
-        placeholderTextColor="#94A3B8"
+        placeholderTextColor="#375072"
         style={styles.input}
         autoCorrect={false}
         autoCapitalize="none"

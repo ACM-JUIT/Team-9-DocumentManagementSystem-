@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    backgroundColor: '#F1F5F9',
+    backgroundColor: '#171742',
     padding: 18,
     borderRadius: 15,
     fontSize: 17,
